@@ -7,6 +7,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const token = getCookie('token');
+  console.log(token, "tokentoken")
   let LoggedInUser = token ? jwtDecode(token) : {};
   const [user, setUser] = useState(LoggedInUser || {});
 

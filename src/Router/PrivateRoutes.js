@@ -10,7 +10,7 @@ export const PrivateRoutes = () => {
   const auth = useAuth()
   const location = useLocation()
 
-  if (auth?.user && !auth.user.perm) {
+  if (auth?.user && !auth.user.exp) {
     return <Navigate to="/login" state={{ path: location.pathname }} />
   }
 
