@@ -14,10 +14,11 @@ const Sidenav = () => {
     { label: "Personal Info", href: '/profile', icon: <AppstoreOutlined />, key: '/profile' },
   ]
   return (
-    <div className='p-1'>
-      <div className='flex items-center bg-white p-4'>
-        <img width={35} src={Logo} alt='logo' />
-        <img className='ml-4' width={80} src={Sedin} alt='logo' />
+    <div className='p-0'>
+      <div className='flex items-center bg-white py-4 px-4 border'>
+        {/* <img width={35} src={Logo} alt='logo' />
+        <img className='ml-4' width={80} src={Sedin} alt='logo' /> */}
+        <img width={200} alt='img' className='ml-6 mt-1' src="https://railsfactory.com/assets/images/Ruby-on-Rails-Development-Company.png" />
       </div>
       <Menu
         theme="dark"

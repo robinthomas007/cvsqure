@@ -15,8 +15,8 @@ export const PrivateRoutes = () => {
   }
 
   return (
-    <Layout>
-      <Layout style={{ background: '#fff' }} className='h-screen'>
+    <Layout className='min-h-fit'>
+      <Layout style={{ background: '#fff', minHeight: 915 }}>
         <Sider width={300} theme='dark'>
           <Sidenav />
         </Sider>
