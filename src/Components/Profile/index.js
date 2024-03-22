@@ -8,12 +8,16 @@ import Project from './Project';
 import Certification from './Certification'
 import axios from 'axios'
 import { useAuth } from './../../Context/authContext'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast';
+import { CheckOutlined } from '@ant-design/icons';
 
 const Profile = () => {
 
   const [current, setCurrent] = useState(0);
   const [skills, setSkills] = useState([]);
   const [userProfile, setUserProfile] = useState(null)
+  const navigate = useNavigate();
 
   const auth = useAuth()
 
@@ -43,11 +47,29 @@ const Profile = () => {
   const handleSetProfile = (data, type) => {
     axios.patch(`http://localhost:8080/api/profile/${userProfile.profile_id}`, { ...userProfile, [type]: data })
       .then(response => {
+        toast.success('Profile informations are updated',
+          {
+            style: {
+              border: '1px solid green',
+              padding: '16px',
+              color: 'green',
+            },
+            iconTheme: {
+              primary: 'green',
+              secondary: '#FFFAEE',
+            },
+          }
+        )
         setUserProfile(response.data);
-        setCurrent(current + 1)
+        if (current < 5) {
+          setCurrent(current + 1)
+        } else {
+          navigate(`/`)
+        }
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
+        toast.error('Somenthing went wrong!');
       });
 
   }
@@ -55,27 +77,27 @@ const Profile = () => {
   const steps = [
     {
       title: 'Personal Info',
-      content: <PersonalInfo handleSetProfile={handleSetProfile} current={current} setCurrent={setCurrent} personal_details={userProfile?.personal_details} />
+      content: <PersonalInfo handleSetProfile={handleSetProfile} personal_details={userProfile?.personal_details} />
     },
     {
       title: 'Job History',
-      content: <JobHistory handleSetProfile={handleSetProfile} work_histories={userProfile?.work_histories} current={current} setCurrent={setCurrent} />
+      content: <JobHistory handleSetProfile={handleSetProfile} work_histories={userProfile?.work_histories} />
     },
     {
       title: 'Education',
-      content: <Education handleSetProfile={handleSetProfile} educational_details={userProfile?.educational_details} current={current} setCurrent={setCurrent} />
+      content: <Education handleSetProfile={handleSetProfile} educational_details={userProfile?.educational_details} />
     },
     {
       title: 'Skills',
-      content: <Skills skillsSet={skills} current={current} handleSetProfile={handleSetProfile} skills_data={userProfile?.skills} setCurrent={setCurrent} />
+      content: <Skills skillsSet={skills} handleSetProfile={handleSetProfile} skills_data={userProfile?.skills} />
     },
     {
       title: 'Project Experience',
-      content: <Project handleSetProfile={handleSetProfile} project_experiences={userProfile?.project_experiences} current={current} setCurrent={setCurrent} />
+      content: <Project handleSetProfile={handleSetProfile} project_experiences={userProfile?.project_experiences} />
     },
     {
       title: 'Certification',
-      content: <Certification current={current} setCurrent={setCurrent} />
+      content: <Certification handleSetProfile={handleSetProfile} certifications={userProfile?.certifications} />
     },
   ];
 

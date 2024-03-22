@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 const dateFormat = 'DD-MM-YYYY'
 
-export default function JobHistory({ current, setCurrent, work_histories, handleSetProfile }) {
+export default function JobHistory({ work_histories, handleSetProfile }) {
   const [jobHistories, setJobHistories] = useState([{}]);
 
   const [form] = Form.useForm()

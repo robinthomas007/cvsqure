@@ -7,18 +7,18 @@ const Dashboard = () => {
   const [profile, setProfile] = useState(null)
 
   useEffect(() => {
-    const token = getCookie('token');
-    axios.get('/api/profile', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        setProfile(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching profile:', error);
-      });
+    // const token = getCookie('token');
+    // axios.get('/api/profile', {
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`
+    //   }
+    // })
+    //   .then(response => {
+    //     setProfile(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching profile:', error);
+    // });
 
   }, [])
 

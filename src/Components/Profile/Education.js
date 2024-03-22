@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 const dateFormat = 'DD-MM-YYYY'
 
-export default function Education({ current, setCurrent, educational_details, handleSetProfile }) {
+export default function Education({ educational_details, handleSetProfile }) {
   const [educationDetails, setEducationDetails] = useState([{}]);
   const [form] = Form.useForm()
 

@@ -4,7 +4,7 @@ import { LoadingOutlined, PlusOutlined, DoubleRightOutlined } from '@ant-design/
 
 const { TextArea } = Input;
 
-export default function PersonalInfo({ current, setCurrent, personal_details, handleSetProfile }) {
+export default function PersonalInfo({ personal_details, handleSetProfile }) {
   const [fileList, setFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');

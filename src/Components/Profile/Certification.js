@@ -1,27 +1,47 @@
-import React, { useCallback, useState } from 'react';
-import { Button, Form, Input, Row, Col, Rate, Card, Select } from 'antd';
-import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Form, Input, Row, Col, Card, DatePicker } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs'
 
-export default function Certification({ current, setCurrent }) {
-  const [skills, setSkills] = useState([{}]);
+const dateFormat = 'DD-MM-YYYY'
+
+export default function Certification({ certifications, handleSetProfile }) {
+  const [certificates, setCertificates] = useState([{}]);
+
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (certifications && certifications.length > 0) {
+      const certDetail = certifications.map((cer, i) => {
+        return { ...cer, expires_on: dayjs(cer.expires_on, dateFormat) }
+      })
+      setCertificates(certDetail)
+      form.setFieldsValue({
+        certifications: certDetail
+      })
+    }
+  }, [certifications])
 
   const handleAddSkills = () => {
-    setSkills([...skills, {}]);
+    setCertificates([...certificates, {}]);
   };
 
   const handleRemoveSkills = (index) => {
-    const updateSkills = [...skills];
+    const updateSkills = [...certificates];
     updateSkills.splice(index, 1);
-    setSkills(updateSkills);
+    setCertificates(updateSkills);
   };
 
   const onFinish = useCallback((values) => {
-    setCurrent(current + 1);
+    console.log(values, "valuesvalues")
+    const formValues = values.certifications.map((val, i) => {
+      return { ...val, expires_on: dayjs(val.expires_on).format(dateFormat) }
+    })
+    handleSetProfile(formValues, 'certifications')
   }, []);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
 
   return (
@@ -31,6 +51,7 @@ export default function Certification({ current, setCurrent }) {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
         <div className='font-semibold text-2xl py-6 text-blue-500'>
@@ -40,57 +61,49 @@ export default function Certification({ current, setCurrent }) {
           Add Skills
         </Button>
       </div>}>
-        <Row className='p-2'>
-          <Col span={18}>
-            <Row className='p-2'>
-              <Col span={18} push={2}>
-                <Form.Item
-                  name={['skills', 'url']}
-                  rules={[{ required: true, message: 'Please select skills!' }]}
-                  labelCol={{ span: 24 }}
-                  style={{ marginBottom: 5 }}
-                  label='Url'
-                >
-                  <Input placeholder='url' />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Col>
 
-        </Row>
-        {skills.map((job, index) => (
-          <Row key={index} gutter={16} className={`p-2 ${index !== skills.length - 1 ? '' : ''}`}>
+        {certificates.map((job, index) => (
+          <Row key={index} gutter={16} className={`p-2 ${index !== certificates.length - 1 ? '' : ''}`}>
             <Col span={18}>
               <Row gutter={16} className='items-end'>
-                <Col span={6} push={2}>
+                <Col span={20}>
                   <Form.Item
-                    name={['details', index, 'name']}
+                    name={['certifications', index, 'url']}
+                    rules={[{ required: true, message: 'Please select url!' }]}
+                    labelCol={{ span: 24 }}
+                    style={{ marginBottom: 10 }}
+                  >
+                    <Input placeholder='Url' />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item
+                    name={['certifications', index, 'name']}
                     rules={[{ required: true, message: 'Please select name!' }]}
                     labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
+                    style={{ marginBottom: 10 }}
                   >
-                    <Input />
+                    <Input placeholder='Name' />
                   </Form.Item>
                 </Col>
                 <Col span={6} push={2}>
                   <Form.Item
-                    name={['details', index, 'issued_by']}
+                    name={['certifications', index, 'issued_by']}
                     rules={[{ required: true, message: 'Please select issue by!' }]}
                     labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
+                    style={{ marginBottom: 10 }}
                   >
-                    <Input />
+                    <Input placeholder='Issyed By' />
                   </Form.Item>
                 </Col>
                 <Col span={6} push={2}>
                   <Form.Item
-                    name={['details', index, 'expires_on']}
+                    name={['certifications', index, 'expires_on']}
                     rules={[{ required: true, message: 'Please select expires on!' }]}
                     labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
+                    style={{ marginBottom: 10 }}
                   >
-
-                    <Select placeholder='Select skills' options={[]} />
+                    <DatePicker className='w-full' format={dateFormat} />
                   </Form.Item>
                 </Col>
 

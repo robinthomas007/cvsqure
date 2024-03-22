@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form, Input, Row, Col, Rate, Card, Select } from 'antd';
 import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
 
-export default function Skills({ current, setCurrent, skillsSet, skills_data, handleSetProfile }) {
+export default function Skills({ skillsSet, skills_data, handleSetProfile }) {
   const [skills, setSkills] = useState([{}]);
 
   const [form] = Form.useForm()

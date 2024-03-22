@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 const { TextArea } = Input
 const dateFormat = 'DD-MM-YYYY'
 
-export default function Project({ current, setCurrent, handleSetProfile, project_experiences }) {
+export default function Project({ handleSetProfile, project_experiences }) {
   const [projects, setProjects] = useState([{}]);
 
   const [form] = Form.useForm()
@@ -18,7 +18,7 @@ export default function Project({ current, setCurrent, handleSetProfile, project
       })
       setProjects(projectDtl)
       form.setFieldsValue({
-        project_experiences: project_experiences
+        project_experiences: projectDtl
       })
     }
   }, [project_experiences])
@@ -42,7 +42,6 @@ export default function Project({ current, setCurrent, handleSetProfile, project
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
 
   return (
@@ -52,6 +51,7 @@ export default function Project({ current, setCurrent, handleSetProfile, project
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
         <div className='font-semibold text-2xl py-6 text-blue-500'>
@@ -80,7 +80,7 @@ export default function Project({ current, setCurrent, handleSetProfile, project
                   <Form.Item
                     name={['project_experiences', index, 'tech_stack']}
                     label="Tech Stack"
-                    rules={[{ required: true, message: 'Please input Tech Stack!' }]}
+                    // rules={[{ required: true, message: 'Please input Tech Stack!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >

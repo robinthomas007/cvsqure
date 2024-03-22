@@ -9,7 +9,7 @@ body, .ant-layout  {
     font-family: 'Roboto' !important;
 }
 
-.ant-input-outlined , .ant-select-selector{
+.ant-input-outlined , .ant-select-selector, .ant-picker{
   border: none !important;
   border-bottom: 1px solid #ddd!important;
   box-shadow: none !important;
