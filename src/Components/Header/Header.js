@@ -16,8 +16,9 @@ export default function HeaderProfile() {
 
   const ProfileContent = (
     <div style={{ cursor: 'pointer' }}>
+      <p className='my-2'>{auth.user.email}</p>
       <hr />
-      <p onClick={() => clearCookie()}>Logout</p>
+      <p className='my-2' onClick={() => clearCookie()}>Logout</p>
     </div>
   );
 
@@ -29,7 +30,7 @@ export default function HeaderProfile() {
         <div className=''>
           <Popover
             content={ProfileContent}
-            title={auth.user.email}
+            title={auth.user.name}
             trigger="click"
             open={open}
             onOpenChange={handleOpenChange}

@@ -9,14 +9,17 @@ body, .ant-layout  {
     font-family: 'Roboto' !important;
 }
 
-.ant-input-outlined {
+.ant-input-outlined , .ant-select-selector{
   border: none !important;
   border-bottom: 1px solid #ddd!important;
+  box-shadow: none !important;
 }
 
-.ant-input-outlined:focus {
+.ant-input-outlined:focus , .ant-select-selector:focus, .ant-select-focused{
   box-shadow:none !important;
-  border-bottom: 1px solid rgb(9, 9, 77) !important;
+  border-bottom: 1px solid rgb(30, 30, 168) !important;
+  /* outline: none; */
+  box-shadow: none !important;
 }
 
 .profile-upload .ant-upload-select , 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, message, Steps, theme } from 'antd';
 import PersonalInfo from './PersonalInfo';
 import JobHistory from './JobHistory';
@@ -6,15 +6,51 @@ import Education from './Education';
 import Skills from './Skills';
 import Project from './Project';
 import Certification from './Certification'
+import axios from 'axios'
+import { useAuth } from './../../Context/authContext'
 
-const App = () => {
+const Profile = () => {
 
-  const [current, setCurrent] = useState(5);
+  const [current, setCurrent] = useState(0);
+  const [userProfile, setUserProfile] = useState(null)
 
+  const auth = useAuth()
+
+  useEffect(() => {
+    axios.defaults.withCredentials = true
+
+    axios.get(`http://localhost:8080/api/user/${auth.user.user_id}/profile`)
+      .then(response => {
+        setUserProfile(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
+      });
+
+  }, [])
+
+  useEffect(() => {
+    console.log("Updated userProfile:", userProfile);
+  }, [userProfile]);
+
+  const handleSetProfile = (data, type) => {
+
+    axios.patch(`http://localhost:8080/api/profile/${userProfile.profile_id}`, { ...userProfile, [type]: data })
+      .then(response => {
+        console.log(response, 0)
+        // setProfile(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
+      });
+
+  }
+
+  console.log(userProfile, "profileprofileprofileprofile")
   const steps = [
     {
       title: 'Personal Info',
-      content: <PersonalInfo current={current} setCurrent={setCurrent} />
+      content: <PersonalInfo handleSetProfile={handleSetProfile} current={current} setCurrent={setCurrent} personal_details={userProfile?.personal_details} />
     },
     {
       title: 'Job History',
@@ -52,4 +88,4 @@ const App = () => {
     </div>
   );
 };
-export default App;
+export default Profile;

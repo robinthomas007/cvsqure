@@ -1,27 +1,41 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, Row, Col, Upload, Avatar, Card, Modal } from 'antd';
 import { LoadingOutlined, PlusOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
-export default function PersonalInfo({ current, setCurrent }) {
+export default function PersonalInfo({ current, setCurrent, personal_details, handleSetProfile }) {
   const [fileList, setFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
 
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (personal_details) {
+      const full_address = personal_details.address ? personal_details.address.split(',') : []
+      form.setFieldsValue({
+        ...personal_details, address: {
+          city: full_address[0],
+          country: full_address[1],
+          pincode: full_address[2]
+        }
+      })
+    }
+  }, [])
+
   const onFinish = useCallback((values) => {
     const formattedAddress = Object.values(values.address).join(', ');
     delete values.address;
-    const personal_details = {
-      user_id: 123,
+    const personal_dtl = {
       personal_details: {
         ...values,
         address: formattedAddress
       }
     };
-    console.log(personal_details, 'valuesvaluesvaluesvaluesvalues');
-  }, []);
+    handleSetProfile(personal_dtl, 'personal_details')
+  }, [personal_details]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -65,23 +79,23 @@ export default function PersonalInfo({ current, setCurrent }) {
           <Col span={18}>
             <div className='grid grid-cols-2 gap-4'>
               <Form.Item
-                label="First Name"
-                name="first_name"
-                rules={[{ required: true, message: 'Please input your firstname!' }]}
+                label="Full Name"
+                name="name"
+                rules={[{ required: true, message: 'Please input your fullname!' }]}
                 labelAlign="top"
                 labelCol={{ span: 24 }}
                 style={{ marginBottom: 5 }}
               >
-                <Input placeholder='Firstname' />
+                <Input placeholder='Full Name' />
               </Form.Item>
               <Form.Item
-                label="Surname"
-                name="surname"
-                rules={[{ required: true, message: 'Please input your surname!' }]}
+                label="Employee Number"
+                name="employee_number"
+                rules={[{ required: true, message: 'Please input your employee number!' }]}
                 labelCol={{ span: 24 }}
                 style={{ marginBottom: 5 }}
               >
-                <Input placeholder='Surname' />
+                <Input placeholder='Employee Number' />
               </Form.Item>
             </div>
             <div className='grid grid-cols-1 gap-4'>
@@ -194,7 +208,7 @@ export default function PersonalInfo({ current, setCurrent }) {
             <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
               icon={<DoubleRightOutlined className='ml-1' />}
               size='large' type="primary" htmlType="submit" >
-              Next
+              Save And Next
             </Button>
           </Form.Item>
         </div>

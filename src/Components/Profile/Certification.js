@@ -107,7 +107,7 @@ export default function Certification({ current, setCurrent }) {
           <Form.Item>
             <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
               size='large' type="primary" htmlType="submit" >
-              Finish
+              Submit For Approval
             </Button>
           </Form.Item>
         </div>
