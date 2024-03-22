@@ -14,6 +14,9 @@ export default function PersonalInfo({ current, setCurrent, personal_details, ha
 
   useEffect(() => {
     if (personal_details) {
+      if (personal_details.photo_url) {
+        setFileList([{ url: personal_details.photo_url }])
+      }
       const full_address = personal_details.address ? personal_details.address.split(',') : []
       form.setFieldsValue({
         ...personal_details, address: {
@@ -23,23 +26,20 @@ export default function PersonalInfo({ current, setCurrent, personal_details, ha
         }
       })
     }
-  }, [])
+  }, [personal_details])
 
   const onFinish = useCallback((values) => {
     const formattedAddress = Object.values(values.address).join(', ');
     delete values.address;
     const personal_dtl = {
-      personal_details: {
-        ...values,
-        address: formattedAddress
-      }
+      ...values,
+      address: formattedAddress
     };
     handleSetProfile(personal_dtl, 'personal_details')
   }, [personal_details]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
 
   const getBase64 = (file) =>
@@ -70,6 +70,7 @@ export default function PersonalInfo({ current, setCurrent, personal_details, ha
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card
         title={<div className='font-semibold text-2xl py-6 text-blue-500'>Personal Information</div>}

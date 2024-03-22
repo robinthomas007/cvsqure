@@ -12,6 +12,7 @@ import { useAuth } from './../../Context/authContext'
 const Profile = () => {
 
   const [current, setCurrent] = useState(0);
+  const [skills, setSkills] = useState([]);
   const [userProfile, setUserProfile] = useState(null)
 
   const auth = useAuth()
@@ -30,15 +31,20 @@ const Profile = () => {
   }, [])
 
   useEffect(() => {
-    console.log("Updated userProfile:", userProfile);
-  }, [userProfile]);
+    axios.get(`http://localhost:8080/api/skills`)
+      .then(response => {
+        setSkills(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
+      });
+  }, []);
 
   const handleSetProfile = (data, type) => {
-
     axios.patch(`http://localhost:8080/api/profile/${userProfile.profile_id}`, { ...userProfile, [type]: data })
       .then(response => {
-        console.log(response, 0)
-        // setProfile(response.data);
+        setUserProfile(response.data);
+        setCurrent(current + 1)
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
@@ -46,7 +52,6 @@ const Profile = () => {
 
   }
 
-  console.log(userProfile, "profileprofileprofileprofile")
   const steps = [
     {
       title: 'Personal Info',
@@ -54,19 +59,19 @@ const Profile = () => {
     },
     {
       title: 'Job History',
-      content: <JobHistory current={current} setCurrent={setCurrent} />
+      content: <JobHistory handleSetProfile={handleSetProfile} work_histories={userProfile?.work_histories} current={current} setCurrent={setCurrent} />
     },
     {
       title: 'Education',
-      content: <Education current={current} setCurrent={setCurrent} />
+      content: <Education handleSetProfile={handleSetProfile} educational_details={userProfile?.educational_details} current={current} setCurrent={setCurrent} />
     },
     {
       title: 'Skills',
-      content: <Skills current={current} setCurrent={setCurrent} />
+      content: <Skills skillsSet={skills} current={current} handleSetProfile={handleSetProfile} skills_data={userProfile?.skills} setCurrent={setCurrent} />
     },
     {
       title: 'Project Experience',
-      content: <Project current={current} setCurrent={setCurrent} />
+      content: <Project handleSetProfile={handleSetProfile} project_experiences={userProfile?.project_experiences} current={current} setCurrent={setCurrent} />
     },
     {
       title: 'Certification',

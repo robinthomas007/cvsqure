@@ -1,9 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Form, Input, Row, Col, Rate, Card, Select } from 'antd';
 import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
 
-export default function Skills({ current, setCurrent }) {
+export default function Skills({ current, setCurrent, skillsSet, skills_data, handleSetProfile }) {
   const [skills, setSkills] = useState([{}]);
+
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (skills_data && skills_data.length > 0) {
+      setSkills(skills_data)
+      form.setFieldsValue({
+        skills: skills_data
+      })
+    }
+  }, [skills_data])
 
   const handleAddSkills = () => {
     setSkills([...skills, {}]);
@@ -16,12 +27,12 @@ export default function Skills({ current, setCurrent }) {
   };
 
   const onFinish = useCallback((values) => {
-    setCurrent(current + 1);
-  }, []);
+
+    handleSetProfile(values.skills, 'skills')
+  }, [skills_data]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
 
   return (
@@ -31,6 +42,7 @@ export default function Skills({ current, setCurrent }) {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
         <div className='font-semibold text-2xl py-6 text-blue-500'>
@@ -51,7 +63,9 @@ export default function Skills({ current, setCurrent }) {
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='Select skills' options={[]} />
+                    <Select
+                      placeholder='Select skills'
+                      options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))} />
                   </Form.Item>
                 </Col>
                 <Col span={6} push={2}>

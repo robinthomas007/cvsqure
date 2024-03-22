@@ -1,9 +1,25 @@
-import React, { useCallback, useState } from 'react';
-import { Button, Form, Input, Row, Col, Checkbox, Card, Select } from 'antd';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Form, Input, Row, Col, DatePicker, Card } from 'antd';
 import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs'
 
-export default function Education({ current, setCurrent }) {
+const dateFormat = 'DD-MM-YYYY'
+
+export default function Education({ current, setCurrent, educational_details, handleSetProfile }) {
   const [educationDetails, setEducationDetails] = useState([{}]);
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (educational_details && educational_details.length > 0) {
+      const eduDtl = educational_details.map((edu, i) => {
+        return { ...edu, graduation_year: dayjs(edu.graduation_year, dateFormat) }
+      })
+      setEducationDetails(eduDtl)
+      form.setFieldsValue({
+        educational_details: eduDtl
+      })
+    }
+  }, [educational_details])
 
   const handleEducationDetail = () => {
     setEducationDetails([...educationDetails, {}]);
@@ -16,12 +32,15 @@ export default function Education({ current, setCurrent }) {
   };
 
   const onFinish = useCallback((values) => {
-    setCurrent(current + 1);
-  }, []);
+    const formValues = values.educational_details.map((val, i) => {
+      return { ...val, graduation_year: dayjs(val.graduation_year).format(dateFormat) }
+    })
+
+    handleSetProfile(formValues, 'educational_details')
+  }, [educational_details]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
 
   return (
@@ -31,6 +50,7 @@ export default function Education({ current, setCurrent }) {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
         <div className='font-semibold text-2xl py-6 text-blue-500'>
@@ -79,25 +99,15 @@ export default function Education({ current, setCurrent }) {
                     <Input placeholder="Degree" />
                   </Form.Item>
                 </Col>
-                <Col span={6}>
+                <Col span={10}>
                   <Form.Item
-                    name={['educational_details', index, 'month']}
+                    name={['educational_details', index, 'graduation_year']}
                     label="Graduation Date"
-                    rules={[{ required: true, message: 'Please input month!' }]}
+                    rules={[{ required: true, message: 'Please select graduation year!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='Select month' options={[]} />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item
-                    name={['educational_details', index, 'year']}
-                    rules={[{ required: true, message: 'Please input year!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Select placeholder='Select year' options={[]} />
+                    <DatePicker format={dateFormat} />
                   </Form.Item>
                 </Col>
               </Row>

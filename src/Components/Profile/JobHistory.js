@@ -1,9 +1,26 @@
-import React, { useCallback, useState } from 'react';
-import { Button, Form, Input, Row, Col, Checkbox, Card, Select } from 'antd';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Form, Input, Row, Col, Checkbox, Card, Select, DatePicker } from 'antd';
 import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs'
 
-export default function JobHistory({ current, setCurrent }) {
+const dateFormat = 'DD-MM-YYYY'
+
+export default function JobHistory({ current, setCurrent, work_histories, handleSetProfile }) {
   const [jobHistories, setJobHistories] = useState([{}]);
+
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (work_histories && work_histories.length > 0) {
+      const jobDtl = work_histories.map((work, i) => {
+        return { ...work, start_date: dayjs(work.start_date, dateFormat), end_date: dayjs(work.end_date, dateFormat) }
+      })
+      setJobHistories(jobDtl)
+      form.setFieldsValue({
+        work_histories: jobDtl
+      })
+    }
+  }, [work_histories])
 
   const handleAddJobHistory = () => {
     setJobHistories([...jobHistories, {}]);
@@ -16,14 +33,34 @@ export default function JobHistory({ current, setCurrent }) {
   };
 
   const onFinish = useCallback((values) => {
-    console.log(values, "valuesvaluesvalues2")
-    setCurrent(current + 1);
-  }, []);
+    const formValues = values.work_histories.map((val, i) => {
+      return { ...val, start_date: dayjs(val.start_date).format(dateFormat), end_date: dayjs(val.end_date).format(dateFormat) }
+    })
+
+    handleSetProfile(formValues, 'work_histories')
+  }, [work_histories]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-    setCurrent(current + 1);
   };
+
+  const handleStartDateChange = (date, dateString, index) => {
+  };
+
+  const handleEndDateChange = (date, dateString, index) => {
+    const newValue = form.getFieldsValue();
+    newValue.work_histories[index].current = date ? false : true;
+    form.setFieldsValue(newValue);
+  };
+
+  const handleCheckBoxChange = (e, index) => {
+    console.log(e.target.checked, index)
+
+    const newValue = form.getFieldsValue();
+    newValue.work_histories[index].end_date = e.target.checked ? undefined : dayjs();
+    form.setFieldsValue(newValue);
+
+  }
 
   return (
     <Form
@@ -32,6 +69,7 @@ export default function JobHistory({ current, setCurrent }) {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       labelAlign="top"
+      form={form}
     >
       <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
         <div className='font-semibold text-2xl py-6 text-blue-500'>
@@ -47,7 +85,7 @@ export default function JobHistory({ current, setCurrent }) {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name={['job_histories', index, 'job_title']}
+                    name={['work_histories', index, 'job_title']}
                     label="Job Title"
                     rules={[{ required: true, message: 'Please input job title!' }]}
                     labelCol={{ span: 24 }}
@@ -58,7 +96,7 @@ export default function JobHistory({ current, setCurrent }) {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    name={['job_histories', index, 'company']}
+                    name={['work_histories', index, 'company']}
                     label="Company"
                     rules={[{ required: true, message: 'Please input company!' }]}
                     labelCol={{ span: 24 }}
@@ -71,7 +109,7 @@ export default function JobHistory({ current, setCurrent }) {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name={['job_histories', index, 'location']}
+                    name={['work_histories', index, 'location']}
                     label="Location"
                     rules={[{ required: true, message: 'Please input location!' }]}
                     labelCol={{ span: 24 }}
@@ -84,53 +122,36 @@ export default function JobHistory({ current, setCurrent }) {
               <Row gutter={16} className='items-end'>
                 <Col span={6}>
                   <Form.Item
-                    name={['job_histories', index, 'start_month']}
+                    name={['work_histories', index, 'start_date']}
                     label="Start Date"
                     rules={[{ required: true, message: 'Please input location!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='Start month' options={[]} />
+                    <DatePicker format={dateFormat} onChange={(date, dateString) => handleStartDateChange(date, dateString, index)} />
                   </Form.Item>
                 </Col>
-                <Col span={6}>
-                  <Form.Item
-                    name={['job_histories', index, 'start_year']}
-                    rules={[{ required: true, message: 'Please input location!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Select placeholder='Start year' options={[]} />
-                  </Form.Item>
-                </Col>
+
                 <Col span={6} className=''>
                   <Form.Item
-                    name={['job_histories', index, 'end_month']}
+                    name={['work_histories', index, 'end_date']}
                     label="End Date"
                     rules={[{ required: true, message: 'Please input location!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='End month' options={[]} />
+                    <DatePicker format={dateFormat} onChange={(date, dateString) => handleEndDateChange(date, dateString, index)} />
                   </Form.Item>
                 </Col>
-                <Col span={6}>
+
+                <Col span={6} push={1}>
                   <Form.Item
-                    name={['job_histories', index, 'end_year']}
-                    rules={[{ required: true, message: 'Please input location!' }]}
+                    name={['work_histories', index, 'current']}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
+                    valuePropName="checked"
                   >
-                    <Select placeholder='End year' options={[]} />
-                  </Form.Item>
-                </Col>
-                <Col span={6} push={12}>
-                  <Form.Item
-                    name={['job_histories', index, 'current']}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Checkbox>I currently work here</Checkbox>
+                    <Checkbox onChange={(e) => handleCheckBoxChange(e, index)}>I currently work here</Checkbox>
                   </Form.Item>
                 </Col>
               </Row>

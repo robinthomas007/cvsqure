@@ -1,11 +1,27 @@
-import React, { useCallback, useState } from 'react';
-import { Button, Form, Input, Row, Col, Checkbox, Card, Select } from 'antd';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Form, Input, Row, Col, Checkbox, Card, DatePicker } from 'antd';
 import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs'
 
 const { TextArea } = Input
+const dateFormat = 'DD-MM-YYYY'
 
-export default function Project({ current, setCurrent }) {
+export default function Project({ current, setCurrent, handleSetProfile, project_experiences }) {
   const [projects, setProjects] = useState([{}]);
+
+  const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (project_experiences && project_experiences.length > 0) {
+      const projectDtl = project_experiences.map((pro, i) => {
+        return { ...pro, start_date: dayjs(pro.start_date, dateFormat), end_date: dayjs(pro.end_date, dateFormat) }
+      })
+      setProjects(projectDtl)
+      form.setFieldsValue({
+        project_experiences: project_experiences
+      })
+    }
+  }, [project_experiences])
 
   const handleAddProjects = () => {
     setProjects([...projects, {}]);
@@ -18,8 +34,11 @@ export default function Project({ current, setCurrent }) {
   };
 
   const onFinish = useCallback((values) => {
-    setCurrent(current + 1);
-  }, []);
+    const formValues = values.project_experiences.map((val, i) => {
+      return { ...val, start_date: dayjs(val.start_date).format(dateFormat), end_date: dayjs(val.end_date).format(dateFormat) }
+    })
+    handleSetProfile(formValues, 'project_experiences')
+  }, [project_experiences]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -48,7 +67,7 @@ export default function Project({ current, setCurrent }) {
               <Row gutter={16} className='items-end'>
                 <Col span={12}>
                   <Form.Item
-                    name={['project_experience', index, 'name']}
+                    name={['project_experiences', index, 'name']}
                     label="Project Name"
                     rules={[{ required: true, message: 'Please input Project Name!' }]}
                     labelCol={{ span: 24 }}
@@ -56,8 +75,10 @@ export default function Project({ current, setCurrent }) {
                   >
                     <Input placeholder="Project Name" />
                   </Form.Item>
+                </Col>
+                <Col span={12}>
                   <Form.Item
-                    name={['project_experience', index, 'tech_stack']}
+                    name={['project_experiences', index, 'tech_stack']}
                     label="Tech Stack"
                     rules={[{ required: true, message: 'Please input Tech Stack!' }]}
                     labelCol={{ span: 24 }}
@@ -66,64 +87,60 @@ export default function Project({ current, setCurrent }) {
                     <Input placeholder="Tech Stack" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+
+              </Row>
+              <Row>
+                <Col span={24}>
                   <Form.Item
-                    name={['project_experience', index, 'roles_responsibilities']}
+                    name={['project_experiences', index, 'roles_responsibilities']}
                     label="Roles & Responsibilities"
                     rules={[{ required: true, message: 'Please input company!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <TextArea placeholder="Company" rows={4} />
+                    <TextArea placeholder="Roles & Responsibilities" rows={4} />
+                  </Form.Item>
+                </Col>
+                <Col span={24}>
+                  <Form.Item
+                    name={['project_experiences', index, 'description']}
+                    label="Description"
+                    rules={[{ required: true, message: 'Please input company!' }]}
+                    labelCol={{ span: 24 }}
+                    style={{ marginBottom: 5 }}
+                  >
+                    <TextArea placeholder="Description" rows={4} />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16} className='items-end'>
                 <Col span={6}>
                   <Form.Item
-                    name={['project_experience', index, 'start_month']}
+                    name={['project_experiences', index, 'start_date']}
                     label="Start Date"
                     rules={[{ required: true, message: 'Please input month!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='Start month' options={[]} />
+                    <DatePicker format={dateFormat} />
+
                   </Form.Item>
                 </Col>
                 <Col span={6}>
                   <Form.Item
-                    name={['project_experience', index, 'start_year']}
-                    rules={[{ required: true, message: 'Please input year!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Select placeholder='Start year' options={[]} />
-                  </Form.Item>
-                </Col>
-                <Col span={6} className=''>
-                  <Form.Item
-                    name={['project_experience', index, 'end_month']}
                     label="End Date"
-                    rules={[{ required: true, message: 'Please input month!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Select placeholder='End month' options={[]} />
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item
-                    name={['project_experience', index, 'end_year']}
+                    name={['project_experiences', index, 'end_date']}
                     rules={[{ required: true, message: 'Please input year!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Select placeholder='End year' options={[]} />
+                    <DatePicker format={dateFormat} />
+
                   </Form.Item>
                 </Col>
-                <Col span={7} push={12}>
+                <Col span={7}>
                   <Form.Item
-                    name={['project_experience', index, 'current']}
+                    name={['project_experiences', index, 'current']}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
