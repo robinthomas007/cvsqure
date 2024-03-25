@@ -22,11 +22,40 @@ body, .ant-layout  {
   box-shadow: none !important;
 }
 
-.profile-upload .ant-upload-select , 
+/* Default width and height */
+.profile-upload .ant-upload-select,
 .profile-upload .ant-upload-list-item {
   width: 200px !important;
   height: 200px !important;
 }
+
+/* Media query for small screens (e.g., mobile phones) */
+@media (max-width: 640px) {
+  .profile-upload .ant-upload-select,
+  .profile-upload .ant-upload-list-item {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Media query for medium screens (e.g., tablets) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .profile-upload .ant-upload-select,
+  .profile-upload .ant-upload-list-item {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
+
+/* Media query for large screens (e.g., desktops) */
+@media (min-width: 1025px) {
+  .profile-upload .ant-upload-select,
+  .profile-upload .ant-upload-list-item {
+    width: 200px !important;
+    height: 200px !important;
+  }
+}
+
 
 .menu-style {
 

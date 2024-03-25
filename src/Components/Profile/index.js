@@ -108,11 +108,13 @@ const Profile = () => {
 
   return (
     <div className='p-2'>
-      <Steps current={current} items={items} />
+      <Steps current={current} items={items} className='md:flex md:justify-center'>
+      </Steps>
       <div className='mt-10'>
         {steps[current].content}
       </div>
     </div>
+
   );
 };
 export default Profile;

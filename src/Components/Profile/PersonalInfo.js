@@ -18,6 +18,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
         setFileList([{ url: personal_details.photo_url }])
       }
       const full_address = personal_details.address ? personal_details.address.split(',') : []
+      console.log(full_address, "full_addressfull_address")
       form.setFieldsValue({
         ...personal_details, address: {
           city: full_address[0],
@@ -29,7 +30,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
   }, [personal_details])
 
   const onFinish = useCallback((values) => {
-    const formattedAddress = Object.values(values.address).join(', ');
+    const formattedAddress = Object.values(values.address).join(',');
     delete values.address;
     const personal_dtl = {
       ...values,
@@ -73,12 +74,13 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
       form={form}
     >
       <Card
-        title={<div className='font-semibold text-2xl py-6 text-blue-500'>Personal Information</div>}
+        title={<div className='font-semibold text-2xl py-4 md:py-6 text-blue-500'>Personal Information</div>}
         className='shadow-2xl'
+        style={{ minWidth: '300px', maxWidth: '100%', margin: 'auto' }}
       >
-        <Row>
-          <Col span={18}>
-            <div className='grid grid-cols-2 gap-4'>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={24} lg={18}>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Form.Item
                 label="Full Name"
                 name="name"
@@ -110,7 +112,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
                 <Input placeholder='Profession' />
               </Form.Item>
             </div>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-4 md:grid-cols-4 gap-4 xs:grid-cols-1'>
               <div className='col-span-2'>
                 <Form.Item
                   label="City"
@@ -122,29 +124,27 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
                   <Input placeholder='City' />
                 </Form.Item>
               </div>
-              <div className='grid grid-cols-2 gap-4 col-span-2'>
-                <Form.Item
-                  label="Country"
-                  name={["address", "country"]}
-                  rules={[{ required: true, message: 'Please input your country!' }]}
-                  labelCol={{ span: 24 }}
-                  style={{ marginBottom: 5 }}
-                >
-                  <Input placeholder='Country' />
-                </Form.Item>
-                <Form.Item
-                  label="Pin Code"
-                  name={["address", "pincode"]}
-                  rules={[{ required: true, message: 'Please input your pincode!' }]}
-                  labelCol={{ span: 24 }}
-                  wrapperCol={24}
-                  style={{ marginBottom: 5 }}
-                >
-                  <Input placeholder='Pincode' />
-                </Form.Item>
-              </div>
+              <Form.Item
+                label="Country"
+                name={["address", "country"]}
+                rules={[{ required: true, message: 'Please input your country!' }]}
+                labelCol={{ span: 24 }}
+                style={{ marginBottom: 5 }}
+              >
+                <Input placeholder='Country' />
+              </Form.Item>
+              <Form.Item
+                label="Pin Code"
+                name={["address", "pincode"]}
+                rules={[{ required: true, message: 'Please input your pincode!' }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                style={{ marginBottom: 5 }}
+              >
+                <Input placeholder='Pincode' />
+              </Form.Item>
             </div>
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Form.Item
                 label="Phone"
                 name="phone_number"
@@ -158,7 +158,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
+                rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Email is not valid" }]}
                 labelCol={{ span: 24 }}
                 style={{ marginBottom: 5 }}
               >
@@ -176,8 +176,8 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
               </Form.Item>
             </div>
           </Col>
-          <Col span={6}>
-            <div className='ml-20'>
+          <Col xs={24} sm={24} md={24} lg={6}>
+            <div className='ml-2 sm:ml-20'>
               <Upload
                 listType="picture-card"
                 maxCount={1}
@@ -206,14 +206,19 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
         </Row>
         <div className='flex justify-end'>
           <Form.Item>
-            <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
+            <Button
+              className="md:w-auto md:justify-end"
               icon={<DoubleRightOutlined className='ml-1' />}
-              size='large' type="primary" htmlType="submit" >
+              size={{ xs: 'large', sm: 'large', md: 'middle' }}
+              type="primary"
+              htmlType="submit"
+            >
               Save And Next
             </Button>
           </Form.Item>
         </div>
       </Card>
     </Form>
+
   );
 }

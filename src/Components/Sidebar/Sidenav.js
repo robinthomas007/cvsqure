@@ -3,7 +3,8 @@ import {
   AppstoreOutlined,
   UserOutlined,
   UsergroupAddOutlined,
-  FilePdfOutlined
+  FilePdfOutlined,
+  BarsOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useLocation, Link } from 'react-router-dom';
@@ -20,6 +21,7 @@ const Sidenav = () => {
     { label: "Personal Info", href: '/profile', icon: <UserOutlined />, key: '/profile', role: 'user' },
     { label: "User List", href: '/users', icon: <UsergroupAddOutlined />, key: '/users', role: 'admin' },
     { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template', role: 'admin' },
+    { label: "Skills", href: '/skills', icon: <BarsOutlined />, key: '/skills', role: 'admin' },
   ]
 
   const filteredNavigation = auth.user.role !== 'admin' ? navigation.filter((nav) => nav.role === 'user') : navigation;

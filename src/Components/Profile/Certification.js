@@ -69,7 +69,9 @@ export default function Certification({ certifications, handleSetProfile }) {
                 <Col span={20}>
                   <Form.Item
                     name={['certifications', index, 'url']}
-                    rules={[{ required: true, message: 'Please select url!' }]}
+                    rules={[
+                      { type: 'url', warningOnly: true, message: 'Invalid url' },
+                      { type: 'string', min: 6, message: 'min 6 character is required' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 10 }}
                   >
@@ -79,7 +81,7 @@ export default function Certification({ certifications, handleSetProfile }) {
                 <Col span={6}>
                   <Form.Item
                     name={['certifications', index, 'name']}
-                    rules={[{ required: true, message: 'Please select name!' }]}
+                    // rules={[{ required: true, message: 'Please select name!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 10 }}
                   >
@@ -89,7 +91,7 @@ export default function Certification({ certifications, handleSetProfile }) {
                 <Col span={6} push={2}>
                   <Form.Item
                     name={['certifications', index, 'issued_by']}
-                    rules={[{ required: true, message: 'Please select issue by!' }]}
+                    // rules={[{ required: true, message: 'Please select issue by!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 10 }}
                   >
@@ -99,7 +101,7 @@ export default function Certification({ certifications, handleSetProfile }) {
                 <Col span={6} push={2}>
                   <Form.Item
                     name={['certifications', index, 'expires_on']}
-                    rules={[{ required: true, message: 'Please select expires on!' }]}
+                    // rules={[{ required: true, message: 'Please select expires on!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 10 }}
                   >

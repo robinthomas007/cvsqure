@@ -9,6 +9,7 @@ import Login from './../Components/Login/Login'
 import Dashboard from './../Components/Dashboard/Dashboard'
 import UserList from './../Components/UserList/UserList'
 import Template from './../Components/Templates/Template'
+import Skills from './../Components/Skills/Skills'
 
 function Routes() {
   let element = useRoutes([
@@ -17,6 +18,7 @@ function Routes() {
       children: [
         { path: '/users', element: <UserList /> },
         { path: '/template', element: <Template /> },
+        { path: '/skills', element: <Skills /> },
       ],
     },
     {
