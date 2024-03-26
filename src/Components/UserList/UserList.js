@@ -40,27 +40,27 @@ const UserList = () => {
     },
     {
       title: 'Role',
-      dataIndex: 'Role',
-      key: 'Role',
+      dataIndex: 'role',
+      key: 'role',
     },
     {
       title: 'Approved',
-      dataIndex: 'ApprovedFlag',
-      key: 'ApprovedFlag',
+      dataIndex: 'approved_flag',
+      key: 'approved_flag',
       render: (_, record) => {
-        console.log(record.Profile.ApprovedFlag, "record")
+        console.log(record.profile.approved_flag, "record")
         return (
-          <div>{record.Profile?.ApprovedFlag ? 'true' : 'false'}</div>
+          <div>{record.profile?.approved_flag ? 'true' : 'false'}</div>
         )
       },
     },
     {
       title: 'Approved By',
-      dataIndex: 'ApprovedBy',
-      key: 'ApprovedBy',
+      dataIndex: 'approved_by',
+      key: 'approved_by',
       render: (_, record) => {
         return (
-          <div>{record.Profile.ApprovedBy}</div>
+          <div>{record.profile.approved_by}</div>
         )
       },
     },
