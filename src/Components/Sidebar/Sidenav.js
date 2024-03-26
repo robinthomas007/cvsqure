@@ -16,15 +16,27 @@ const Sidenav = () => {
   const location = useLocation();
   const auth = useAuth()
 
-  const navigation = [
-    { label: "Dashboard", href: '/', icon: <AppstoreOutlined />, key: '/', role: 'user' },
-    { label: "Personal Info", href: '/profile', icon: <UserOutlined />, key: '/profile', role: 'user' },
-    { label: "User List", href: '/users', icon: <UsergroupAddOutlined />, key: '/users', role: 'admin' },
-    { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template', role: 'admin' },
-    { label: "Skills", href: '/skills', icon: <BarsOutlined />, key: '/skills', role: 'admin' },
+  const adminNavigation = [
+    { label: "Dashboard", href: '/', icon: <AppstoreOutlined />, key: '/' },
+    { label: "User List", href: '/users', icon: <UsergroupAddOutlined />, key: '/users' },
+    { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template' },
+    { label: "Skills", href: '/skills', icon: <BarsOutlined />, key: '/skills' },
   ]
 
-  const filteredNavigation = auth.user.role !== 'admin' ? navigation.filter((nav) => nav.role === 'user') : navigation;
+  const userNavigation = [
+    { label: "Dashboard", href: '/', icon: <AppstoreOutlined />, key: '/' },
+    { label: "Personal Info", href: '/profile', icon: <UserOutlined />, key: '/profile' },
+  ]
+
+  const filteredNavigation = auth.user.role === 'admin' ? adminNavigation : userNavigation;
+
+  const getSelectedKey = (pathname) => {
+    if (pathname.startsWith('/users') || pathname.startsWith('/user')) {
+      return '/users';
+    }
+    return pathname;
+  };
+
 
   return (
     <div className='p-0'>
@@ -34,7 +46,7 @@ const Sidenav = () => {
       <Menu
         theme="dark"
         mode="inline"
-        selectedKeys={[location.pathname]}
+        selectedKeys={[getSelectedKey(location.pathname)]}
         className='my-10'
         style={{ margin: '20px auto' }}
       >

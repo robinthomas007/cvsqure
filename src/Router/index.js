@@ -17,6 +17,7 @@ function Routes() {
       element: <AdminRoutes />,
       children: [
         { path: '/users', element: <UserList /> },
+        { path: '/user/:id', element: <Profile /> },
         { path: '/template', element: <Template /> },
         { path: '/skills', element: <Skills /> },
       ],

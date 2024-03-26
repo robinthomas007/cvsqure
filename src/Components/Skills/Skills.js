@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
   PlusOutlined
 } from '@ant-design/icons';
-import axios from 'axios'
+import axios from './../../Api/axios'
 import CreateModal from './CreateModal'
 
 const Skills = () => {

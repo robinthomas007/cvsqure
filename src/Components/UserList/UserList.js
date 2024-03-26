@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Table, Space, Input, Button } from 'antd';
+import { Card, Table, Space, Input, Button, Avatar } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
   PlusOutlined
 } from '@ant-design/icons';
-import axios from 'axios'
+import axios from './../../Api/axios'
 import CreateModal from './CreateModal'
+import { useLocation, Link } from 'react-router-dom';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -18,6 +19,7 @@ const UserList = () => {
   }
 
   useEffect(() => {
+    axios.defaults.withCredentials = true
     axios.get(`http://localhost:8080/api/admin/users`)
       .then(response => {
         setUsers(response.data.users)
@@ -32,6 +34,14 @@ const UserList = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      render: (_, record) => {
+        return (
+          <Space>
+            <Avatar src={record.profile.photo_url} />
+            <Link to={`/user/${record.id}`}>{record.name}</Link>
+          </Space>
+        )
+      },
     },
     {
       title: 'Email',
@@ -48,7 +58,6 @@ const UserList = () => {
       dataIndex: 'approved_flag',
       key: 'approved_flag',
       render: (_, record) => {
-        console.log(record.profile.approved_flag, "record")
         return (
           <div>{record.profile?.approved_flag ? 'true' : 'false'}</div>
         )
@@ -69,7 +78,7 @@ const UserList = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <EditOutlined onClick={() => { setOpen(true); setEditUsers(record) }} />
+          {/* <EditOutlined onClick={() => { setOpen(true); setEditUsers(record) }} /> */}
           <DeleteOutlined />
         </Space>
       ),

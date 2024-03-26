@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Button, message, Steps, theme } from 'antd';
+import { Steps } from 'antd';
 import PersonalInfo from './PersonalInfo';
 import JobHistory from './JobHistory';
 import Education from './Education';
 import Skills from './Skills';
 import Project from './Project';
 import Certification from './Certification'
-import axios from 'axios'
+import axios from './../../Api/axios'
 import { useAuth } from './../../Context/authContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast';
-import { CheckOutlined } from '@ant-design/icons';
 
 const Profile = () => {
 
@@ -19,12 +18,17 @@ const Profile = () => {
   const [userProfile, setUserProfile] = useState(null)
   const navigate = useNavigate();
 
+  let { id } = useParams();
+
   const auth = useAuth()
 
   useEffect(() => {
+    let url = `http://localhost:8080/api/user/${auth.user.user_id}/profile`
+    if (id) {
+      url = `http://localhost:8080/api/admin/user/${id}/profile`
+    }
     axios.defaults.withCredentials = true
-
-    axios.get(`http://localhost:8080/api/user/${auth.user.user_id}/profile`)
+    axios.get(url)
       .then(response => {
         setUserProfile(response.data);
       })
@@ -32,7 +36,7 @@ const Profile = () => {
         console.error('Error fetching profile:', error);
       });
 
-  }, [])
+  }, [id])
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/skills`)
@@ -44,8 +48,14 @@ const Profile = () => {
       });
   }, []);
 
+
   const handleSetProfile = (data, type) => {
-    axios.patch(`http://localhost:8080/api/profile/${userProfile.profile_id}`, { ...userProfile, [type]: data })
+    let url = `http://localhost:8080/api/profile/${userProfile.profile_id}`
+    if (id) {
+      url = `http://localhost:8080/api/admin/profile/${userProfile.profile_id}`
+    }
+
+    axios.patch(url, { ...userProfile, [type]: data })
       .then(response => {
         toast.success('Profile informations are updated',
           {
