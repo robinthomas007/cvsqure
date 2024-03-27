@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Button, Form, Input, Row, Col, Card, DatePicker } from 'antd';
+import { Button, Form, Input, Row, Col, Card, DatePicker, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
 
@@ -32,12 +32,11 @@ export default function Certification({ certifications, handleSetProfile }) {
     setCertificates(updateSkills);
   };
 
-  const onFinish = useCallback((values) => {
-    console.log(values, "valuesvalues")
+  const onFinish = useCallback((values, isApproval) => {
     const formValues = values.certifications.map((val, i) => {
       return { ...val, expires_on: dayjs(val.expires_on).format(dateFormat) }
     })
-    handleSetProfile(formValues, 'certifications')
+    handleSetProfile(formValues, 'certifications', isApproval)
   }, []);
 
   const onFinishFailed = (errorInfo) => {
@@ -119,12 +118,27 @@ export default function Certification({ certifications, handleSetProfile }) {
           </Row>
         ))}
         <div className='flex justify-end mt-4'>
-          <Form.Item>
-            <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
-              size='large' type="primary" htmlType="submit" >
-              Submit For Approval
-            </Button>
-          </Form.Item>
+          <Space>
+            <Form.Item>
+              <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
+                size='large' type="primary" htmlType="submit" >
+                Save
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
+                size='large' type="primary" onClick={() => {
+                  form.validateFields().then(() => {
+                    onFinish(form.getFieldsValue(), true)
+                  })
+                    .catch(() => {
+                      onFinishFailed()
+                    })
+                }} >
+                Submit For Approval
+              </Button>
+            </Form.Item>
+          </Space>
         </div>
       </Card>
     </Form>

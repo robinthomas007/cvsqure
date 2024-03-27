@@ -18,7 +18,6 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
         setFileList([{ url: personal_details.photo_url }])
       }
       const full_address = personal_details.address ? personal_details.address.split(',') : []
-      console.log(full_address, "full_addressfull_address")
       form.setFieldsValue({
         ...personal_details, address: {
           city: full_address[0],

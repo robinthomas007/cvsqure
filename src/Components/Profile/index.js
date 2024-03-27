@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Steps } from 'antd';
+import { Steps, Select, Space } from 'antd';
 import PersonalInfo from './PersonalInfo';
 import JobHistory from './JobHistory';
 import Education from './Education';
@@ -10,12 +10,14 @@ import axios from './../../Api/axios'
 import { useAuth } from './../../Context/authContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast';
+import { EyeOutlined } from '@ant-design/icons';
 
 const Profile = () => {
 
   const [current, setCurrent] = useState(0);
   const [skills, setSkills] = useState([]);
   const [userProfile, setUserProfile] = useState(null)
+  const [template, setTemplate] = useState('one')
   const navigate = useNavigate();
 
   let { id } = useParams();
@@ -23,9 +25,9 @@ const Profile = () => {
   const auth = useAuth()
 
   useEffect(() => {
-    let url = `http://localhost:8080/api/user/${auth.user.user_id}/profile`
+    let url = `${process.env.REACT_APP_BASE_URL}/api/user/${auth.user.user_id}/profile`
     if (id) {
-      url = `http://localhost:8080/api/admin/user/${id}/profile`
+      url = `${process.env.REACT_APP_BASE_URL}/api/admin/user/${id}/profile`
     }
     axios.defaults.withCredentials = true
     axios.get(url)
@@ -39,7 +41,7 @@ const Profile = () => {
   }, [id])
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/skills`)
+    axios.get(`${process.env.REACT_APP_BASE_URL}/api/skills`)
       .then(response => {
         setSkills(response.data)
       })
@@ -49,13 +51,13 @@ const Profile = () => {
   }, []);
 
 
-  const handleSetProfile = (data, type) => {
-    let url = `http://localhost:8080/api/profile/${userProfile.profile_id}`
+  const handleSetProfile = (data, type, isApproval) => {
+    let url = `${process.env.REACT_APP_BASE_URL}/api/profile/${userProfile.profile_id}`
     if (id) {
-      url = `http://localhost:8080/api/admin/profile/${userProfile.profile_id}`
+      url = `${process.env.REACT_APP_BASE_URL}/api/admin/profile/${userProfile.profile_id}`
     }
 
-    axios.patch(url, { ...userProfile, [type]: data })
+    axios.patch(url, { ...userProfile, [type]: data, submit_for_approval: isApproval ? true : false })
       .then(response => {
         toast.success('Profile informations are updated',
           {
@@ -116,8 +118,39 @@ const Profile = () => {
     title: <span className='cursor-pointer' onClick={() => setCurrent(i)}>{item.title}</span>,
   }));
 
+  const handleViewTemplate = () => {
+    navigate(`/user/${id}/template?template=${template}`)
+  }
+
+  const handleTemplateChange = (value) => {
+    setTemplate(value)
+  };
+
   return (
     <div className='p-2'>
+      <div className='flex justify-between mb-10'>
+        <div className='text-2xl font-semibold text-blue-600'>Edit User</div>
+        <Space>
+          <label className='font-semibold text-blue-600'>Version:</label>
+          <Select placeholder="Version"
+            defaultValue="1"
+            options={[
+              { value: '1', label: '1.0' },
+            ]}
+          />
+          <label className='font-semibold text-blue-600'>Template:</label>
+          <Select placeholder="Template"
+            defaultValue={template}
+            onChange={handleTemplateChange}
+            options={[
+              { value: 'one', label: 'Railsfactory' },
+              { value: 'two', label: 'Sedin' },
+              { value: 'three', label: 'RF Logo' },
+            ]}
+          />
+          <EyeOutlined onClick={handleViewTemplate} />
+        </Space>
+      </div>
       <Steps current={current} items={items} className='md:flex md:justify-center'>
       </Steps>
       <div className='mt-10'>

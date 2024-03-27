@@ -6,28 +6,29 @@ import {
   PlusOutlined
 } from '@ant-design/icons';
 import axios from './../../Api/axios'
-import CreateModal from './CreateModal'
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [editUsers, setEditUsers] = useState(null);
+  const [q, setQ] = useState('')
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 100,
+  });
 
-  const handleCancel = () => {
-    setOpen(false)
-  }
 
   useEffect(() => {
     axios.defaults.withCredentials = true
-    axios.get(`http://localhost:8080/api/admin/users`)
+    axios.get(`${process.env.REACT_APP_BASE_URL}/api/admin/users?q=${q}&page=${pagination.current}&limit=${pagination.pageSize}`)
       .then(response => {
         setUsers(response.data.users)
+        setPagination({ ...pagination, total: response.data.total_records })
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
       });
-  }, []);
+  }, [pagination.current, pagination.pageSize, q]);
 
   const columns = [
     {
@@ -73,30 +74,42 @@ const UserList = () => {
         )
       },
     },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          {/* <EditOutlined onClick={() => { setOpen(true); setEditUsers(record) }} /> */}
-          <DeleteOutlined />
-        </Space>
-      ),
-    },
+    // {
+    //   title: 'Action',
+    //   key: 'action',
+    //   render: (_, record) => (
+    //     <Space size="middle">
+    //       {/* <DeleteOutlined /> */}
+    //     </Space>
+    //   ),
+    // },
   ]
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    setPagination(pagination);
+  };
+
+  const handleSearchChange = (e) => {
+    const search = e.target.value
+    if (search.length >= 3) {
+      setQ(search)
+    }
+    if (search.length === 0) {
+      setQ('')
+    }
+  }
 
   return (
     <div>
-      {/* {open && <CreateModal open={open} handleCancel={handleCancel} users={editUsers} />} */}
       <Card title={
         <div className='flex justify-between'>
           <div style={{ width: 300 }}>
-            <Input placeholder='Search Users' />
+            <Input placeholder='Search Users, Type atleast 3 characters' onChange={handleSearchChange} />
           </div>
-          {/* <Button type='primary' onClick={() => { setEditUsers(null); setOpen(true) }} icon={<PlusOutlined />}>Add User</Button> */}
         </div>
       }>
-        <Table columns={columns} dataSource={users} />
+        <Table columns={columns} dataSource={users} pagination={pagination}
+          onChange={handleTableChange} />
       </Card>
     </div>
   )

@@ -19,7 +19,7 @@ const Sidenav = () => {
   const adminNavigation = [
     { label: "Dashboard", href: '/', icon: <AppstoreOutlined />, key: '/' },
     { label: "User List", href: '/users', icon: <UsergroupAddOutlined />, key: '/users' },
-    { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template' },
+    // { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template' },
     { label: "Skills", href: '/skills', icon: <BarsOutlined />, key: '/skills' },
   ]
 

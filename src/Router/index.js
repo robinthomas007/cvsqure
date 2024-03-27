@@ -18,7 +18,7 @@ function Routes() {
       children: [
         { path: '/users', element: <UserList /> },
         { path: '/user/:id', element: <Profile /> },
-        { path: '/template', element: <Template /> },
+        { path: '/user/:id/template', element: <Template /> },
         { path: '/skills', element: <Skills /> },
       ],
     },
