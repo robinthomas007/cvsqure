@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Card, Table, Space, Input, Button } from 'antd';
 import {
   EditOutlined,
@@ -23,7 +23,7 @@ const Skills = () => {
     setOpen(false)
   }
 
-  useEffect(() => {
+  const fetchSkills = useCallback(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/api/skills?q=${q}&page=${pagination.current}&limit=${pagination.pageSize}`)
       .then(response => {
         setSkills(response.data)
@@ -32,7 +32,12 @@ const Skills = () => {
       .catch(error => {
         console.error('Error fetching profile:', error);
       });
-  }, [pagination.current, pagination.pageSize, q]);
+
+  }, [pagination.current, pagination.pageSize, q])
+
+  useEffect(() => {
+    fetchSkills()
+  }, [fetchSkills]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     setPagination(pagination);
@@ -61,7 +66,7 @@ const Skills = () => {
       render: (_, record) => (
         <Space size="middle">
           <EditOutlined onClick={() => { setOpen(true); setEditSkills(record) }} />
-          <DeleteOutlined />
+          {/* <DeleteOutlined /> */}
         </Space>
       ),
     },
@@ -69,7 +74,7 @@ const Skills = () => {
 
   return (
     <div>
-      {open && <CreateModal open={open} handleCancel={handleCancel} skills={editSkills} />}
+      {open && <CreateModal fetchSkills={fetchSkills} open={open} handleCancel={handleCancel} skills={editSkills} />}
       <Card title={
         <div className='flex justify-between'>
           <div style={{ width: 300 }}>

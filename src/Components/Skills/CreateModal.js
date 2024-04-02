@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Input, Row, Col } from 'antd';
+import axios from './../../Api/axios'
 
-const CreateModal = ({ open, handleCancel, skills }) => {
+const CreateModal = ({ open, handleCancel, skills, fetchSkills }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log(values, "skills--");
+    console.log(values)
     setConfirmLoading(true);
     setTimeout(() => {
       handleCancel();
       setConfirmLoading(false);
     }, 1000);
 
+    if (skills.ID) {
+      axios.put(`${process.env.REACT_APP_BASE_URL}/api/admin/skill/${skills.ID}`, values)
+        .then(response => {
+          if (response)
+            fetchSkills()
+        })
+        .catch(error => {
+          console.error('Error creating skills:', error);
+        });
+    } else {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/api/admin/skill`, values)
+        .then(response => {
+          if (response)
+            fetchSkills()
+        })
+        .catch(error => {
+          console.error('Error creating skills:', error);
+        });
+    }
   };
 
   useEffect(() => {
     if (skills && Object.keys(skills).length !== 0) {
       console.log(skills, "skillsskillsskills", skills.name)
-      form.setFieldsValue({ id: skills.id, name: skills.name });
+      form.setFieldsValue({ id: skills.ID, name: skills.name });
     }
   }, [skills]);
 
@@ -58,7 +78,7 @@ const CreateModal = ({ open, handleCancel, skills }) => {
               name="name"
               labelCol={{ span: 24 }}
               rules={[
-                { required: true, message: 'Please input your suite name!' },
+                { required: true, message: 'Please input your skill name!' },
                 { min: 2, message: 'Field must be minimum 2 characters.' }
               ]}
             >
