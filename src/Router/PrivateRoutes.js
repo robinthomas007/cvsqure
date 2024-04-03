@@ -16,17 +16,15 @@ export const PrivateRoutes = () => {
 
   return (
     <Layout className='min-h-fit'>
-      <Layout style={{ background: '#fff', minHeight: 915 }}>
-        <Sider width={300} theme='dark'>
+      <Header className='bg-teal-700 m-2' style={{ padding: 0, background: '#168D7F', borderRadius: 8 }}>
+        <HeaderProfile />
+      </Header>
+      <Layout style={{ background: '#f5f5f5', minHeight: 915 }}>
+        <Sider className='shadow-lg m-2 rounded-md' width={240} theme='light'>
           <Sidenav />
         </Sider>
-        <Content>
-          <Header className='bg-white' style={{ padding: 0, background: '#fff' }}>
-            <HeaderProfile />
-          </Header>
-          <div className='' style={{ padding: '50px 100px 0px' }}>
-            <Outlet />
-          </div>
+        <Content className='mr-2'>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

@@ -39,20 +39,16 @@ const Sidenav = () => {
 
 
   return (
-    <div className='p-0'>
-      <div className='flex items-center bg-white py-4 px-4 border'>
-        <img width={200} alt='img' className='ml-6 mt-1' src="https://railsfactory.com/assets/images/Ruby-on-Rails-Development-Company.png" />
-      </div>
+    <div className='p-1'>
       <Menu
-        theme="dark"
         mode="inline"
         selectedKeys={[getSelectedKey(location.pathname)]}
-        className='my-10'
-        style={{ margin: '20px auto' }}
+        className='my-10 text-white cv-menu-left'
+        style={{ margin: '20px auto', border: 'none' }}
       >
         {filteredNavigation.map(({ label, href, icon, key }) => (
-          <Menu.Item key={key} icon={icon} >
-            <Link to={href}>{label}</Link>
+          <Menu.Item key={key} icon={icon} className='rounded-lg' >
+            <Link to={href} className='text-lg'>{label}</Link>
           </Menu.Item>
         ))}
       </Menu>

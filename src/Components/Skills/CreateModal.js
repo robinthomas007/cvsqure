@@ -15,7 +15,7 @@ const CreateModal = ({ open, handleCancel, skills, fetchSkills }) => {
       setConfirmLoading(false);
     }, 1000);
 
-    if (skills.ID) {
+    if (skills?.ID) {
       axios.put(`${process.env.REACT_APP_BASE_URL}/api/admin/skill/${skills.ID}`, values)
         .then(response => {
           if (response)

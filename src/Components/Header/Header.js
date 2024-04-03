@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Avatar, Space, Popover } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Popover } from 'antd';
+import cvBuilder from './../../Images/cvBuilder.png'
 
 import { clearCookie } from './../../Lib/auth'
 import { useAuth } from './../../Context/authContext'
@@ -23,24 +23,24 @@ export default function HeaderProfile() {
   );
 
   return (
-    <div className="p-4 border shadow-lg">
+    <div className="">
       <div className='flex items-center  justify-between'>
-        {/* <img width={200} alt='img' className='ml-24' src="https://railsfactory.com/assets/images/Ruby-on-Rails-Development-Company.png" /> */}
-        <div></div>
-        <div className=''>
-          <Popover
-            content={ProfileContent}
-            title={auth.user.name}
-            trigger="click"
-            open={open}
-            onOpenChange={handleOpenChange}
-            style={{ border: '1px solid red' }}
-            overlayStyle={{ marginRight: '210px', color: 'red' }}
-            rootClassName="profile-menu"
-          >
-            <img width={50} alt='img' className='mr-10 rounded-full' src={auth.user.picture} />
-          </Popover>
-        </div>
+        <img width={120} alt='img' className='ml-4' src={cvBuilder} />
+        <Popover
+          content={ProfileContent}
+          title={auth.user.name}
+          trigger="click"
+          open={open}
+          onOpenChange={handleOpenChange}
+          style={{ border: '1px solid red' }}
+          overlayStyle={{ marginRight: '210px', color: 'red' }}
+          rootClassName="profile-menu"
+        >
+          <div className='flex items-center justify-start mr-10'>
+            <img width={40} alt='img' className='mr-4 rounded-full' src={auth.user.picture} />
+            <label style={{ fontSize: 16 }} className='font-semibold text-white'>{auth.user.name}</label>
+          </div>
+        </Popover>
       </div>
     </div >
   )
