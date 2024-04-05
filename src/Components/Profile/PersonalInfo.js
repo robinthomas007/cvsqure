@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Form, Input, Row, Col, Upload, Avatar, Card, Modal } from 'antd';
-import { LoadingOutlined, PlusOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Row, Col, Upload, Modal } from 'antd';
 
 import { PlusSignCircleIcon } from "hugeicons-react";
 
@@ -105,7 +104,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
           </div>
           <div className='grid grid-cols-1 gap-4'>
             <Form.Item
-              label="Profession"
+              label="Designation"
               name="profession"
               rules={[{ required: true, message: 'Please input your profession!' }]}
               labelCol={{ span: 24 }}
@@ -148,7 +147,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <Form.Item
-              label="Phone"
+              label="Mobile Number"
               name="phone_number"
               rules={[{ required: true, message: 'Please input your phone!' }]}
               labelAlign="top"
@@ -158,20 +157,41 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
               <Input size="large" placeholder='Phone' />
             </Form.Item>
             <Form.Item
-              label="Email"
+              label="Official Email ID"
               name="email"
-              rules={[{ required: true, message: 'Please input your email!' }, { type: 'email', message: "Email is not valid" }]}
+              rules={[{ required: true, message: '' }, { type: 'email', message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
               <Input size="large" placeholder='Email' />
             </Form.Item>
           </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <Form.Item
+              label="Linkedin Profile link"
+              name="linkdin"
+              rules={[{ required: true, message: '' }]}
+              labelAlign="top"
+              labelCol={{ span: 24 }}
+              style={{ marginBottom: 5 }}
+            >
+              <Input size="large" placeholder='Linkedin Profile link' />
+            </Form.Item>
+            <Form.Item
+              label="Personal portfolio/ Medium/Opensource Contributions"
+              name="portfolio"
+              rules={[{ required: true, message: '' }]}
+              labelCol={{ span: 24 }}
+              style={{ marginBottom: 5 }}
+            >
+              <Input size="large" placeholder='Personal portfolio' />
+            </Form.Item>
+          </div>
           <div className='grid grid-cols-1 gap-4'>
             <Form.Item
-              label="Summary"
+              label="Professional Summary (highlight your experience, competency, and aspirations)"
               name="summary"
-              rules={[{ required: true, message: 'Please input your summary!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
             >
               <TextArea rows={4} placeholder='Summary' />
@@ -225,7 +245,6 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
               Upload the photo in a common format like <span className='text-teal-700 font-semibold'>JPEG</span> or <span className='text-teal-700 font-semibold'>PNG</span>, with a file size ideally under <span className='text-teal-700 font-semibold'>1 MB</span>.
             </p>
           </div>
-
         </Col>
       </Row>
     </Form>

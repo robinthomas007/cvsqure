@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import { Button, Row, Col, Card } from 'antd';
-import { Briefcase01Icon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon } from 'hugeicons-react';
+import { Briefcase01Icon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon, errors } from 'hugeicons-react';
 import JobModal from './JobModal';
 
-export default function JobHistory({ work_histories, handleSetProfile, setCurrent, current, renderToast }) {
+export default function JobHistory({ work_histories, handleSetProfile, setCurrent, current, renderToast, open, setOpen }) {
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [editJob, setEditJob] = useState(null);
 
   const handleCancel = () => {
-    setOpen(false)
-    setEditJob(null)
+    if (!errors) {
+      setOpen(false)
+      setEditJob(null)
+    }
   }
 
   return (
     <Row gutter={[16]}>
       <Col xs={24} sm={24} md={24} lg={24}>
         <div>
-          <h2 className='text-gray-700 text-3xl my-2'>Job History</h2>
-          <p className='text-gray-500 text-lg'>Let's uncover your career journey, tell us about your most recent job</p>
+          <h2 className='text-gray-700 text-3xl my-2'>Work History</h2>
+          {work_histories.length === 0 ? <p className='text-gray-500 text-lg'>Now, let’s fill out your Work history</p> :
+            <p className='text-gray-500 text-lg'>Tell us about another job, We’ll put your work history in the right order</p>}
         </div>
       </Col>
 
-      {open && <JobModal work_histories={work_histories} open={open} handleCancel={handleCancel} job={editJob} handleSetProfile={handleSetProfile} />}
+      {open && <JobModal work_histories={work_histories} open={open} handleCancel={handleCancel} job={editJob} handleSetProfile={handleSetProfile} errors={errors} />}
       {work_histories.length > 0 &&
         <Col xs={24} sm={24} md={24} lg={24}>
           {work_histories.map((job, index) => (
@@ -71,7 +74,7 @@ export default function JobHistory({ work_histories, handleSetProfile, setCurren
               variant={"stroke"}
               className='bg-orange-100 rounded-full p-2'
             />
-            <p className='text-xl text-gray-500 w-96 text-center'>Let's showcase your journey, one job at a time. Add your first job now!</p>
+            <p className='text-xl text-gray-500 w-96 text-center'>Let's start with your most recent job Latest job can be mentioned first</p>
             <Button onClick={() => setOpen(true)} type='primary'>Add Job</Button>
           </div>
         </Card>

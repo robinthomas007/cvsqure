@@ -104,3 +104,8 @@ body, .ant-layout {
 .ant-form-item-explain-error {
   display: none;
 }
+
+.ant-table-cell {
+  font-size: 16px !important;
+  color: #5B5B5D !important;
+}

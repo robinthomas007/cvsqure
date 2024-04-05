@@ -3,9 +3,9 @@ import { Button, Row, Col, Card } from 'antd';
 import { Briefcase01Icon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon } from 'hugeicons-react';
 import CertificationModal from './CertificateModal';
 
-export default function Certification({ certifications, handleSetProfile, setCurrent, current }) {
+export default function Certification({ certifications, handleSetProfile, setCurrent, current, open, setOpen }) {
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [editCertificate, setEditCertificate] = useState(null);
 
   const handleCancel = () => {

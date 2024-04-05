@@ -12,7 +12,6 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import { EyeOutlined } from '@ant-design/icons';
 import { CheckmarkCircle01Icon } from "hugeicons-react";
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import { ArrowLeft01Icon } from 'hugeicons-react';
 
@@ -23,6 +22,9 @@ const Profile = () => {
   const [skills, setSkills] = useState([]);
   const [userProfile, setUserProfile] = useState(null)
   const [template, setTemplate] = useState('one')
+  const [errors, setErrors] = useState(null)
+  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
 
   let { id } = useParams();
@@ -62,7 +64,7 @@ const Profile = () => {
     if (id) {
       url = `${process.env.REACT_APP_BASE_URL}/api/admin/profile/${userProfile.profile_id}`
     }
-
+    setErrors(null)
     axios.patch(url, { ...userProfile, [type]: data, submit_for_approval: isApproval ? true : false })
       .then(response => {
         setUserProfile(response.data);
@@ -75,10 +77,12 @@ const Profile = () => {
           // logic for preview page comes here
           renderToast()
         }
+        setOpen(false)
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
-        toast.error('Somenthing went wrong!');
+        // toast.error('Somenthing went wrong!');
+        setErrors(error)
       });
 
   }
@@ -154,6 +158,9 @@ const Profile = () => {
         setCurrent={setCurrent}
         current={current}
         renderToast={renderToast}
+        errors={errors}
+        open={open}
+        setOpen={setOpen}
       />
     },
     {
@@ -164,6 +171,8 @@ const Profile = () => {
         setCurrent={setCurrent}
         current={current}
         renderToast={renderToast}
+        open={open}
+        setOpen={setOpen}
       />
     },
     {
@@ -185,6 +194,8 @@ const Profile = () => {
         setCurrent={setCurrent}
         current={current}
         renderToast={renderToast}
+        open={open}
+        setOpen={setOpen}
       />
     },
     {
@@ -195,6 +206,8 @@ const Profile = () => {
         setCurrent={setCurrent}
         current={current}
         renderToast={renderToast}
+        open={open}
+        setOpen={setOpen}
       />
     },
   ];

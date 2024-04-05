@@ -3,8 +3,8 @@ import { Button, Row, Col, Card } from 'antd';
 import { Briefcase01Icon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon } from 'hugeicons-react';
 import EducationModal from './EducationModal';
 
-export default function Education({ educational_details, handleSetProfile, setCurrent, current, renderToast }) {
-  const [open, setOpen] = useState(false);
+export default function Education({ educational_details, handleSetProfile, setCurrent, current, renderToast, open, setOpen }) {
+  // const [open, setOpen] = useState(false);
   const [editEducation, setEditEducation] = useState(null);
 
   const handleCancel = () => {
@@ -17,7 +17,8 @@ export default function Education({ educational_details, handleSetProfile, setCu
       <Col xs={24} sm={24} md={24} lg={24}>
         <div>
           <h2 className='text-gray-700 text-3xl my-2'>Education</h2>
-          <p className='text-gray-500 text-lg'>Let's uncover your Education journey, Share your academic adventures</p>
+          {educational_details.length === 0 ? <p className='text-gray-500 text-lg'>Great, let’s work on your Education</p>
+            : <p className='text-gray-500 text-lg'>Let's uncover your Education journey, Share your academic adventures</p>}
         </div>
       </Col>
 

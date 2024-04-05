@@ -5,7 +5,6 @@ const { TextArea } = Input
 const dateFormat = 'MMM-YYYY';
 
 const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job }) => {
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -14,11 +13,6 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
   }, [job])
 
   const onFinish = (values) => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      handleCancel();
-      setConfirmLoading(false);
-    }, 1000);
     const data = { ...values, start_date: dayjs(values.start_date).format(dateFormat), end_date: dayjs(values.end_date).format(dateFormat) }
     if (job?.id) {
       const updatedWorkHistories = work_histories.map(work => {
@@ -39,9 +33,8 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
 
   return (
     <Modal
-      title={<div className='text-teal-700 text-2xl'>Job History</div>}
+      title={<div className='text-teal-700 text-2xl'>Work History</div>}
       open={open}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
       destroyOnClose
       width={700}
@@ -69,7 +62,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
               <Col span={12}>
                 <Form.Item
                   name='job_title'
-                  label="Job Title"
+                  label="Designation"
                   rules={[{ required: true, message: 'Please input job title!' }]}
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}

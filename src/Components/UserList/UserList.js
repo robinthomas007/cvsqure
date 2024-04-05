@@ -37,7 +37,7 @@ const UserList = () => {
         return (
           <Space>
             <Avatar src={record.profile?.personal_details?.photo_url} />
-            <Link to={`/admin/user/${record.id}`}>{record.name}</Link>
+            <Link to={`/admin/user/${record.id}`} className='text-base text-gray-700 font-semibold'>{record.name}</Link>
           </Space>
         )
       },

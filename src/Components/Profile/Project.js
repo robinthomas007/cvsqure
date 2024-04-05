@@ -3,9 +3,9 @@ import { Button, Row, Col, Card } from 'antd';
 import { FileValidationIcon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon } from 'hugeicons-react';
 import ProjectModal from './ProjectModal';
 
-export default function Project({ handleSetProfile, project_experiences, setCurrent, current, renderToast }) {
+export default function Project({ handleSetProfile, project_experiences, setCurrent, current, renderToast, open, setOpen }) {
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
 
   const handleCancel = () => {
