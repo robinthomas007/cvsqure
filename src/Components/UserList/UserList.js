@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table, Space, Input, Button, Avatar } from 'antd';
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined
+  PlusCircleOutlined
 } from '@ant-design/icons';
 import axios from './../../Api/axios'
 import { Link } from 'react-router-dom';
@@ -38,8 +36,8 @@ const UserList = () => {
       render: (_, record) => {
         return (
           <Space>
-            <Avatar src={record.profile.photo_url} />
-            <Link to={`/user/${record.id}`}>{record.name}</Link>
+            <Avatar src={record.profile?.personal_details?.photo_url} />
+            <Link to={`/admin/user/${record.id}`}>{record.name}</Link>
           </Space>
         )
       },
@@ -48,6 +46,22 @@ const UserList = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      render: (_, record) => {
+        return record.profile?.personal_details?.phone_number
+      },
+    },
+    {
+      title: 'Employee Number',
+      dataIndex: 'employee_number',
+      key: 'employee_number',
+      render: (_, record) => {
+        return record.profile?.personal_details?.employee_number
+      },
     },
     {
       title: 'Role',
@@ -100,14 +114,17 @@ const UserList = () => {
   }
 
   return (
-    <div>
-      <Card title={
-        <div className='flex justify-between'>
-          <div style={{ width: 300 }}>
-            <Input placeholder='Search Users, Type atleast 3 characters' onChange={handleSearchChange} />
-          </div>
+    <div className='mt-2'>
+      <div className='flex justify-between mb-2 items-center bg-white shadow py-3 px-4 rounded-md'>
+        <div>
+          <label className='text-xl font-semibold'>Employee list</label>
         </div>
-      }>
+        <div>
+          <Input className='table-input-search mr-2' size='small' placeholder='Search Users, Type atleast 3 characters' onChange={handleSearchChange} />
+          <Button icon={<PlusCircleOutlined />} type='primary'>Add User</Button>
+        </div>
+      </div>
+      <Card>
         <Table columns={columns} dataSource={users} pagination={pagination}
           onChange={handleTableChange} />
       </Card>

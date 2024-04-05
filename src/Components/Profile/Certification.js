@@ -14,16 +14,16 @@ export default function Certification({ certifications, handleSetProfile, setCur
   }
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16]}>
       <Col xs={24} sm={24} md={24} lg={24}>
         <div>
           <h2 className='text-gray-700 text-3xl my-2'>Certification</h2>
-          <p className='text-gray-500 text-lg mb-6'>Elevate your expertise with certified insights.</p>
+          <p className='text-gray-500 text-lg'>Elevate your expertise with certified insights.</p>
         </div>
       </Col>
 
       {open && <CertificationModal certifications={certifications} open={open} handleCancel={handleCancel} certificate={editCertificate} handleSetProfile={handleSetProfile} />}
-      {certifications.length && <Col xs={24} sm={24} md={24} lg={24}>
+      {certifications.length > 0 && <Col xs={24} sm={24} md={24} lg={24}>
         {certifications.map((cert, index) => (
           <Card className='w-full my-4 shadow-sm hover:shadow' >
             <div className='flex justify-between'>
@@ -58,7 +58,7 @@ export default function Certification({ certifications, handleSetProfile, setCur
             </div>
           </Card>
         ))}
-        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add more jobs</span>
+        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Certification</span>
       </Col>}
 
       {certifications.length === 0 && <Col xs={24} sm={24} md={24} lg={24}>

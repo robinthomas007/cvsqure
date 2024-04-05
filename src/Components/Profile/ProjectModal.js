@@ -105,7 +105,7 @@ export default function Project({ open, handleCancel, project_experiences, handl
           </Col>
         </Row>
         <Row>
-          <Col span={24}>
+          {/* <Col span={24}>
             <Form.Item
               name='tech_stack'
               label="Tech Stack"
@@ -115,7 +115,7 @@ export default function Project({ open, handleCancel, project_experiences, handl
             >
               <Input placeholder="Tech Stack" />
             </Form.Item>
-          </Col>
+          </Col> */}
           <Col span={12}>
             <Form.Item
               name='current'

@@ -78,7 +78,7 @@ export default function Education({ open, handleCancel, educational_details, han
             </Form.Item>
           </Col>
 
-          <Col span={24}>
+          <Col span={18}>
             <Form.Item
               name='degree'
               label="Degree"
@@ -87,6 +87,17 @@ export default function Education({ open, handleCancel, educational_details, han
               style={{ marginBottom: 5 }}
             >
               <Input placeholder="Degree" />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item
+              name='graduation_year'
+              label="Graduation Date"
+              rules={[{ required: true, message: 'Please select graduation year!' }]}
+              labelCol={{ span: 24 }}
+              style={{ marginBottom: 5 }}
+            >
+              <DatePicker picker="month" format={dateFormat} className='w-full' />
             </Form.Item>
           </Col>
 
@@ -99,19 +110,6 @@ export default function Education({ open, handleCancel, educational_details, han
               style={{ marginBottom: 5 }}
             >
               <Input placeholder="University / College Location" />
-            </Form.Item>
-          </Col>
-
-
-          <Col span={24}>
-            <Form.Item
-              name='graduation_year'
-              label="Graduation Date"
-              rules={[{ required: true, message: 'Please select graduation year!' }]}
-              labelCol={{ span: 24 }}
-              style={{ marginBottom: 5 }}
-            >
-              <DatePicker picker="month" format={dateFormat} className='w-full' />
             </Form.Item>
           </Col>
         </Row>

@@ -8,10 +8,13 @@ import Project from './Project';
 import Certification from './Certification'
 import axios from './../../Api/axios'
 import { useAuth } from './../../Context/authContext'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import { EyeOutlined } from '@ant-design/icons';
 import { CheckmarkCircle01Icon } from "hugeicons-react";
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { Breadcrumb } from 'antd';
+import { ArrowLeft01Icon } from 'hugeicons-react';
 
 const Profile = () => {
 
@@ -46,7 +49,7 @@ const Profile = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/api/skills`)
       .then(response => {
-        setSkills(response.data)
+        setSkills(response.data.skills)
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
@@ -82,11 +85,11 @@ const Profile = () => {
 
   const calculatePercentageCompletion = (data) => {
     let filledSectionsCount = 1;
-    if (data.project_experiences.length > 0) filledSectionsCount++;
-    if (data.work_histories.length > 0) filledSectionsCount++;
-    if (data.skills.length > 0) filledSectionsCount++;
-    if (data.educational_details.length > 0) filledSectionsCount++;
-    if (data.certifications.length > 0) filledSectionsCount++;
+    if (data.project_experiences?.length > 0) filledSectionsCount++;
+    if (data.work_histories?.length > 0) filledSectionsCount++;
+    if (data.skills?.length > 0) filledSectionsCount++;
+    if (data.educational_details?.length > 0) filledSectionsCount++;
+    if (data.certifications?.length > 0) filledSectionsCount++;
 
     switch (filledSectionsCount) {
       case 1:
@@ -207,7 +210,7 @@ const Profile = () => {
   }));
 
   const handleViewTemplate = () => {
-    navigate(`/user/${id}/template?template=${template}`)
+    navigate(`/admin/user/${id}/template?template=${template}`)
   }
 
   const handleTemplateChange = (value) => {
@@ -216,6 +219,44 @@ const Profile = () => {
 
   return (
     <div className='p-2'>
+      {id && <div className='flex justify-between mb-2 bg-white shadow-md py-2 px-4 rounded-md'>
+        <div className='text-2xl font-semibold'>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>
+              <Link to={`/admin/users`} style={{ display: 'flex' }} className='text-base'>
+                <ArrowLeft01Icon
+                  size={20}
+                  color={"#000000"}
+                  variant={"stroke"}
+                  className='mr-1'
+                /> Employee List
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{userProfile?.personal_details.name}</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Space>
+          <label className='font-semibold'>Version:</label>
+          <Select placeholder="Version"
+            defaultValue="1"
+            options={[
+              { value: '1', label: '1.0' },
+            ]}
+          />
+          <label className='font-semibold'>Template:</label>
+          <Select placeholder="Template"
+            defaultValue={template}
+            onChange={handleTemplateChange}
+            options={[
+              { value: 'one', label: 'Railsfactory' },
+              { value: 'two', label: 'Sedin' },
+              { value: 'three', label: 'RF Logo' },
+              { value: 'ph6', label: 'PH6' },
+            ]}
+          />
+          <EyeOutlined onClick={handleViewTemplate} />
+        </Space>
+      </div>}
       <Card className='bg-white shadow-lg' style={{ borderRadius: 8 }}>
         <Row>
           <Col span={5}>
@@ -231,30 +272,6 @@ const Profile = () => {
           </Col>
         </Row>
       </Card>
-      {id && <div className='flex justify-between mb-10'>
-        <div className='text-2xl font-semibold text-blue-600'>Edit User</div>
-        <Space>
-          <label className='font-semibold text-blue-600'>Version:</label>
-          <Select placeholder="Version"
-            defaultValue="1"
-            options={[
-              { value: '1', label: '1.0' },
-            ]}
-          />
-          <label className='font-semibold text-blue-600'>Template:</label>
-          <Select placeholder="Template"
-            defaultValue={template}
-            onChange={handleTemplateChange}
-            options={[
-              { value: 'one', label: 'Railsfactory' },
-              { value: 'two', label: 'Sedin' },
-              { value: 'three', label: 'RF Logo' },
-            ]}
-          />
-          <EyeOutlined onClick={handleViewTemplate} />
-        </Space>
-      </div>}
-
     </div>
 
   );

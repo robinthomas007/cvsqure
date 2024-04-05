@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Card, Table, Space, Input, Button } from 'antd';
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined
+  PlusCircleOutlined,
 } from '@ant-design/icons';
 import axios from './../../Api/axios'
 import CreateModal from './CreateModal'
+import { PencilEdit01Icon } from 'hugeicons-react';
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
@@ -26,7 +25,7 @@ const Skills = () => {
   const fetchSkills = useCallback(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/api/skills?q=${q}&page=${pagination.current}&limit=${pagination.pageSize}`)
       .then(response => {
-        setSkills(response.data)
+        setSkills(response.data.skills)
         setPagination({ ...pagination, total: response.data.total_records })
       })
       .catch(error => {
@@ -65,7 +64,15 @@ const Skills = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <EditOutlined onClick={() => { setOpen(true); setEditSkills(record) }} />
+          <PencilEdit01Icon
+            size={16}
+            color={"#4F4C4C"}
+            variant={"stroke"}
+            onClick={() => {
+              setEditSkills(record);
+              setOpen(true)
+            }}
+          />
           {/* <DeleteOutlined /> */}
         </Space>
       ),
@@ -73,16 +80,19 @@ const Skills = () => {
   ]
 
   return (
-    <div>
+    <div className='mt-2'>
       {open && <CreateModal fetchSkills={fetchSkills} open={open} handleCancel={handleCancel} skills={editSkills} />}
-      <Card title={
-        <div className='flex justify-between'>
-          <div style={{ width: 300 }}>
-            <Input placeholder='Search Skills, Type atleast 2 characters' onChange={handleSearchChange} />
-          </div>
-          <Button type='primary' onClick={() => { setEditSkills(null); setOpen(true) }} icon={<PlusOutlined />}>Add Skills</Button>
+      <div className='flex justify-between mb-2 items-center bg-white shadow py-3 px-4 rounded-md'>
+        <div>
+          <label className='text-xl font-semibold'>Skills list</label>
         </div>
-      }>
+        <div>
+          <Input className='table-input-search mr-2' size='small' placeholder='Search Skills, Type atleast 3 characters' onChange={handleSearchChange} />
+          <Button icon={<PlusCircleOutlined />} type='primary' onClick={() => { setEditSkills(null); setOpen(true) }}>Add Skills</Button>
+        </div>
+      </div>
+
+      <Card>
         <Table columns={columns} dataSource={skills} pagination={pagination}
           onChange={handleTableChange} />
       </Card>

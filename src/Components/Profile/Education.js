@@ -13,16 +13,16 @@ export default function Education({ educational_details, handleSetProfile, setCu
   }
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16]}>
       <Col xs={24} sm={24} md={24} lg={24}>
         <div>
           <h2 className='text-gray-700 text-3xl my-2'>Education</h2>
-          <p className='text-gray-500 text-lg mb-6'>Let's uncover your Education journey, Share your academic adventures</p>
+          <p className='text-gray-500 text-lg'>Let's uncover your Education journey, Share your academic adventures</p>
         </div>
       </Col>
 
       {open && <EducationModal educational_details={educational_details} open={open} handleCancel={handleCancel} education={editEducation} handleSetProfile={handleSetProfile} />}
-      {educational_details.length && <Col xs={24} sm={24} md={24} lg={24}>
+      {educational_details.length > 0 && <Col xs={24} sm={24} md={24} lg={24}>
         {educational_details.map((edu, index) => (
           <Card className='w-full my-4 shadow-sm hover:shadow' >
             <div className='flex justify-between'>
@@ -57,7 +57,7 @@ export default function Education({ educational_details, handleSetProfile, setCu
             </div>
           </Card>
         ))}
-        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add more Education</span>
+        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Education</span>
       </Col>}
 
       {educational_details.length === 0 && <Col xs={24} sm={24} md={24} lg={24}>

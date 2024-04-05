@@ -74,7 +74,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
       labelAlign="top"
       form={form}
     >
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16]}>
         <Col xs={24} sm={24} md={24} lg={24}>
           <div>
             <h2 className='text-gray-700 text-3xl my-2'>Personal Information</h2>
@@ -86,7 +86,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Full Name"
               name="name"
-              rules={[{ required: true, message: 'Please input your fullname!' }]}
+              rules={[{ required: true, message: '' }]}
               labelAlign="top"
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}

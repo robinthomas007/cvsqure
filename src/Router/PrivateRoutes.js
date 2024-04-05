@@ -14,8 +14,12 @@ export const PrivateRoutes = () => {
     return <Navigate to="/login" state={{ path: location.pathname }} />
   }
 
+  if (auth?.user && auth.user.role === 'admin') {
+    return <Navigate to="/admin" state={{ path: location.pathname }} />
+  }
+
   return (
-    <Layout className='min-h-fit'>
+    <Layout className='min-h-fit user-layout'>
       <Header className='bg-teal-700 m-2' style={{ padding: 0, background: '#168D7F', borderRadius: 8 }}>
         <HeaderProfile />
       </Header>

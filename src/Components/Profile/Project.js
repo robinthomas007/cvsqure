@@ -14,16 +14,16 @@ export default function Project({ handleSetProfile, project_experiences, setCurr
   }
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16]}>
       <Col xs={24} sm={24} md={24} lg={24}>
         <div>
           <h2 className='text-gray-700 text-3xl my-2'>Project Experience</h2>
-          <p className='text-gray-500 text-lg mb-6'>Unleash your expertise: Share your project experiences and shine bright</p>
+          <p className='text-gray-500 text-lg'>Unleash your expertise: Share your project experiences and shine bright</p>
         </div>
       </Col>
 
       {open && <ProjectModal project_experiences={project_experiences} open={open} handleCancel={handleCancel} project={editProject} handleSetProfile={handleSetProfile} />}
-      {project_experiences.length && <Col xs={24} sm={24} md={24} lg={24}>
+      {project_experiences.length > 0 && <Col xs={24} sm={24} md={24} lg={24}>
         {project_experiences.map((project, index) => (
           <Card className='w-full my-4 shadow-sm hover:shadow' >
             <div className='flex justify-between'>
@@ -58,7 +58,7 @@ export default function Project({ handleSetProfile, project_experiences, setCurr
             </div>
           </Card>
         ))}
-        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add more Projects</span>
+        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Project</span>
       </Col>}
 
       {project_experiences.length === 0 && <Col xs={24} sm={24} md={24} lg={24}>

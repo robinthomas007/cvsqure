@@ -43,7 +43,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
       labelAlign="top"
       form={form}
     >
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16]}>
         <Col xs={24} sm={24} md={24} lg={24}>
           <div>
             <h2 className='text-gray-700 text-3xl my-2'>Skills</h2>
@@ -53,46 +53,48 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
       </Row>
       <Card>
 
-        {skills.map((job, index) => (
-          <Row gutter={[16, 16]} className='my-2'>
-            <Col span={8} >
-              <Form.Item
-                name={['skills', index, 'name']}
-                rules={[{ required: true, message: 'Please select skills!' }]}
-                labelCol={{ span: 24 }}
-                style={{ marginBottom: 5 }}
-              >
-                <Select
-                  placeholder='Select skills'
-                  size='large'
-                  options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))} />
-              </Form.Item>
-            </Col>
-            <Col span={6} push={1}>
-              <Form.Item
-                name={['skills', index, 'rating']}
-                rules={[{ required: true, message: 'Please select rating!' }]}
-                labelCol={{ span: 24 }}
-                style={{ marginBottom: 5 }}
-              >
-                <Rate character={<StarIcon fill='#eee' />} />
-              </Form.Item>
-            </Col>
+        <Row gutter={[16, 16]} className='my-2'>
+          {skills.map((job, index) => (
+            <Col span={12}>
+              <Row>
+                <Col span={11} >
+                  <Form.Item
+                    name={['skills', index, 'name']}
+                    rules={[{ required: true, message: 'Please select skills!' }]}
+                    labelCol={{ span: 24 }}
+                    style={{ marginBottom: 5 }}
+                  >
+                    <Select
+                      placeholder='Select skills'
+                      size='large'
+                      options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))} />
+                  </Form.Item>
+                </Col>
+                <Col span={10} push={1} >
+                  <Form.Item
+                    name={['skills', index, 'rating']}
+                    rules={[{ required: true, message: 'Please select rating!' }]}
+                    labelCol={{ span: 24 }}
+                    style={{ marginBottom: 5 }}
+                  >
+                    <Rate character={<StarIcon fill='#eee' />} />
+                  </Form.Item>
+                </Col>
 
-            <Col span={6}>
-              <div style={{ display: 'flex' }} className='justify-start items-center cursor-pointer'>
-                {index > 0 && <Delete03Icon
-                  size={20}
-                  color={"#FF4D4F"}
-                  variant={"stroke"}
-                  onClick={() => handleRemoveSkills(index)} />}
-              </div>
-            </Col>
-          </Row >
+                <Col span={2}>
+                  <div style={{ display: 'flex' }} className='justify-start items-center cursor-pointer'>
+                    {index > 0 && <Delete03Icon
+                      size={20}
+                      color={"#FF4D4F"}
+                      variant={"stroke"}
+                      onClick={() => handleRemoveSkills(index)} />}
+                  </div>
+                </Col>
+              </Row>
+            </Col>))}
+        </Row >
 
-        ))
-        }
-        <span onClick={() => handleAddSkills()} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add more Skills</span>
+        <span onClick={() => handleAddSkills()} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Skill</span>
       </Card >
       <Row>
         <Col span={24}>

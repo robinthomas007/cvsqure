@@ -16,10 +16,11 @@ function Routes() {
     {
       element: <AdminRoutes />,
       children: [
-        { path: '/users', element: <UserList /> },
-        { path: '/user/:id', element: <Profile /> },
-        { path: '/user/:id/template', element: <Template /> },
-        { path: '/skills', element: <Skills /> },
+        { path: '/admin', element: <Dashboard /> },
+        { path: '/admin/users', element: <UserList /> },
+        { path: '/admin/user/:id', element: <Profile /> },
+        { path: '/admin/user/:id/template', element: <Template /> },
+        { path: '/admin/skills', element: <Skills /> },
       ],
     },
     {

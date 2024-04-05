@@ -3,13 +3,10 @@ import {
   AppstoreOutlined,
   UserOutlined,
   UsergroupAddOutlined,
-  FilePdfOutlined,
   BarsOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useLocation, Link } from 'react-router-dom';
-import Logo from './../../Images/logo.svg'
-import Sedin from './../../Images/sedin.svg'
 import { useAuth } from './../../Context/authContext'
 
 const Sidenav = () => {
@@ -17,10 +14,9 @@ const Sidenav = () => {
   const auth = useAuth()
 
   const adminNavigation = [
-    { label: "Dashboard", href: '/', icon: <AppstoreOutlined />, key: '/' },
-    { label: "User List", href: '/users', icon: <UsergroupAddOutlined />, key: '/users' },
-    // { label: "Templates", href: '/template', icon: <FilePdfOutlined />, key: '/template' },
-    { label: "Skills", href: '/skills', icon: <BarsOutlined />, key: '/skills' },
+    { label: "Dashboard", href: '/admin', icon: <AppstoreOutlined />, key: '/admin' },
+    { label: "User List", href: '/admin/users', icon: <UsergroupAddOutlined />, key: '/admin/users' },
+    { label: "Skills", href: '/admin/skills', icon: <BarsOutlined />, key: '/admin/skills' },
   ]
 
   const userNavigation = [
@@ -31,8 +27,8 @@ const Sidenav = () => {
   const filteredNavigation = auth.user.role === 'admin' ? adminNavigation : userNavigation;
 
   const getSelectedKey = (pathname) => {
-    if (pathname.startsWith('/users') || pathname.startsWith('/user')) {
-      return '/users';
+    if (pathname.startsWith('/admin/users') || pathname.startsWith('/admin/user')) {
+      return '/admin/users';
     }
     return pathname;
   };

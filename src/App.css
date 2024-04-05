@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
 
-body, .ant-layout  {
-     font-family: "League Spartan", sans-serif !important;
-  }
+body, .ant-layout {
+  font-family: "League Spartan", sans-serif !important;
+}
 
-  .ant-col {
-    font-family: "League Spartan", sans-serif !important;
-  }
+.ant-col {
+  font-family: "League Spartan", sans-serif !important;
+}
 
-.ant-input-outlined , .ant-select-selector , .ant-picker{
+.ant-input-outlined, .ant-select-selector, .ant-picker {
   padding: 12px !important;
   color: #646464 !important;
   font-family: "League Spartan", sans-serif !important;
   font-size: 16px !important;
 }
+
 .ant-form-item-label label {
   font-size: 16px !important;
-  font-weight:500 !important;
+  font-weight: 500 !important;
   color: #1F1F1F !important;
 }
 
@@ -26,21 +27,29 @@ body, .ant-layout  {
   height: 220px !important;
 }
 
- .cv-menu-left .ant-menu-item-selected {
-    color: #fff !important;
-    background: #168D7F !important;
-    border-radius: 6px !important;
-  }
-
-  .ant-steps-item-active .ant-steps-item-icon svg ,   .ant-steps-item-finish .ant-steps-item-icon svg{
-    background: #F99417 !important;
-    border: #F99417 !important;
-    color: #fff;
-    border-radius: 100px;
-  }
-  .ant-steps-item-finish .ant-steps-icon {
+.user-layout .cv-menu-left .ant-menu-item-selected {
   color: #fff !important;
-  }
+  background: #168D7F !important;
+  border-radius: 6px !important;
+}
+
+.admin-layout .cv-menu-left .ant-menu-item-selected {
+  background: #2B648D !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+}
+
+.ant-steps-item-active .ant-steps-item-icon svg,
+.ant-steps-item-finish .ant-steps-item-icon svg {
+  background: #F99417 !important;
+  border: #F99417 !important;
+  color: #fff;
+  border-radius: 100px;
+}
+
+.ant-steps-item-finish .ant-steps-icon {
+  color: #fff !important;
+}
 
 .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-tail::after {
   background-color: #ccc !important;
@@ -53,30 +62,29 @@ body, .ant-layout  {
 .ant-steps.ant-steps-vertical .ant-steps-item:not(:last-child) .ant-steps-item-container::after {
   content: '';
   position: absolute;
-  top: calc(50% - 2px); /* Adjust vertical position of the line */
+  top: calc(50% - 2px);
   left: 12px;
-  width: 1px; /* Adjust thickness of the line */
-  height: calc(100% - 21px); /* Adjust height of the line */
-  background-color: #ccc; /* Set color of the line */
+  width: 1px;
+  height: calc(100% - 21px);
+  background-color: #ccc;
   transform: translateX(-50%);
-  border-radius: 1px; /* Optional: Add rounded corners */
-  border-style: dotted; /* Set line style to dotted */
+  border-radius: 1px;
+  border-style: dotted;
 }
 
-.ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
   display: inline-block !important;
   margin-inline-end: 4px !important;
   color: #ff4d4f !important;
   font-size: 14px !important;
   font-family: SimSun, sans-serif;
   line-height: 1;
-  content: "*"  !important;
+  content: "*" !important;
   visibility: visible !important;
 }
 
-.ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
   visibility: hidden !important;
-
 }
 
 .ant-steps-item-tail {
@@ -85,4 +93,14 @@ body, .ant-layout  {
 
 .ant-rate-star-full svg {
   fill: #FDCF2F !important;
+}
+
+.table-input-search {
+  padding: 5px !important;
+  width: 260px;
+  font-size: 14px !important;
+}
+
+.ant-form-item-explain-error {
+  display: none;
 }
