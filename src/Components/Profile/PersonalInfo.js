@@ -27,6 +27,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personal_details])
 
   const onFinish = useCallback((values) => {
@@ -37,6 +38,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
       address: formattedAddress
     };
     handleSetProfile(personal_dtl, 'personal_details')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personal_details]);
 
   const onFinishFailed = (errorInfo) => {

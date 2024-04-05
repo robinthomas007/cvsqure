@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input, Row, Col, Checkbox, Modal, DatePicker } from 'antd';
 import dayjs from 'dayjs'
 
@@ -6,13 +6,13 @@ const { TextArea } = Input
 const dateFormat = 'MMM-YYYY';
 
 export default function Project({ open, handleCancel, project_experiences, handleSetProfile, project }) {
-  const [confirmLoading, setConfirmLoading] = useState(false);
 
   const [form] = Form.useForm()
 
   useEffect(() => {
     if (project)
       form.setFieldsValue({ ...project, start_date: dayjs(project.start_date, dateFormat), end_date: dayjs(project.end_date, dateFormat) })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [project])
 
   const onFinish = (values) => {
@@ -38,7 +38,6 @@ export default function Project({ open, handleCancel, project_experiences, handl
     <Modal
       title={<div className='text-teal-700 text-2xl'>Project Experience</div>}
       open={open}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
       destroyOnClose
       width={700}

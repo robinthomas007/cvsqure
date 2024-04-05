@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input, Row, Col, DatePicker, Modal } from 'antd';
 import dayjs from 'dayjs'
 
@@ -6,12 +6,12 @@ const dateFormat = 'MMM-YYYY';
 
 export default function Education({ open, handleCancel, educational_details, handleSetProfile, education }) {
   const [form] = Form.useForm()
-  const [confirmLoading, setConfirmLoading] = useState(false);
 
   useEffect(() => {
     console.log(education, 'education')
     if (education)
       form.setFieldsValue({ ...education, graduation_year: dayjs(education.graduation_year, dateFormat) })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [education])
 
   const onFinish = (values) => {
@@ -37,7 +37,6 @@ export default function Education({ open, handleCancel, educational_details, han
     <Modal
       title={<div className='text-teal-700 text-2xl'>Education</div>}
       open={open}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
       destroyOnClose
       width={700}

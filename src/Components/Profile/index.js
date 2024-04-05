@@ -45,7 +45,7 @@ const Profile = () => {
       .catch(error => {
         console.error('Error fetching profile:', error);
       });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   useEffect(() => {

@@ -41,6 +41,7 @@ const CreateModal = ({ open, handleCancel, skills, fetchSkills }) => {
       console.log(skills, "skillsskillsskills", skills.name)
       form.setFieldsValue({ id: skills.ID, name: skills.name });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skills]);
 
   const onFinishFailed = (errorInfo) => {

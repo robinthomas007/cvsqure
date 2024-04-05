@@ -1,10 +1,7 @@
-import { Button } from "antd";
 import { Layout, Card } from 'antd';
 import Logo from './../../Images/logo.svg'
 import Sedin from './../../Images/sedin.svg'
-import { useAuth } from './../../Context/authContext'
 import {
-  ProfileOutlined,
 } from '@ant-design/icons';
 import GoogleLoginButton from './GoogleLoginButton'
 
@@ -48,12 +45,8 @@ export default function LoginPage() {
             <div className="text-center">
               <GoogleLoginButton />
             </div>
-
           </Card>
-
-
         </div>
-
       </Sider>
     </Layout>
   )

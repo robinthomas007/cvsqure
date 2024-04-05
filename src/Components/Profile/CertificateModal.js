@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input, Row, Col, DatePicker, Modal } from 'antd';
 import dayjs from 'dayjs'
 
@@ -6,13 +6,12 @@ const dateFormat = 'MMM-YYYY';
 
 export default function CertificationModal({ open, handleCancel, certifications, handleSetProfile, certificate }) {
 
-  const [confirmLoading, setConfirmLoading] = useState(false);
-
   const [form] = Form.useForm()
 
   useEffect(() => {
     if (certificate)
       form.setFieldsValue({ ...certificate, expires_on: dayjs(certificate.expires_on, dateFormat) })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [certificate])
 
   const onFinish = (values) => {
@@ -38,7 +37,6 @@ export default function CertificationModal({ open, handleCancel, certifications,
     <Modal
       title={<div className='text-teal-700 text-2xl'>Job History</div>}
       open={open}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
       destroyOnClose
       width={700}

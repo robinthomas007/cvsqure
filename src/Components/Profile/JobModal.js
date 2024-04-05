@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input, Row, Col, Checkbox, DatePicker, Modal } from 'antd';
 import dayjs from 'dayjs'
 const { TextArea } = Input
@@ -10,6 +10,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
   useEffect(() => {
     if (job)
       form.setFieldsValue({ ...job, start_date: dayjs(job.start_date, dateFormat), end_date: dayjs(job.end_date, dateFormat) })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job])
 
   const onFinish = (values) => {

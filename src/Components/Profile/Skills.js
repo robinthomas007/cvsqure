@@ -14,6 +14,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
         skills: skills_data
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skills_data])
 
   const handleAddSkills = () => {
@@ -28,6 +29,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
 
   const onFinish = useCallback((values) => {
     handleSetProfile(values.skills, 'skills')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skills_data]);
 
   const onFinishFailed = (errorInfo) => {

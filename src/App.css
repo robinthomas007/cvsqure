@@ -97,7 +97,7 @@ body, .ant-layout {
 
 .table-input-search {
   padding: 5px !important;
-  width: 260px;
+  width: 260px !important;
   font-size: 14px !important;
 }
 

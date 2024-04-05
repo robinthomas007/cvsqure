@@ -26,6 +26,7 @@ const UserList = () => {
       .catch(error => {
         console.error('Error fetching profile:', error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.current, pagination.pageSize, q]);
 
   const columns = [
@@ -120,8 +121,8 @@ const UserList = () => {
           <label className='text-xl font-semibold'>Employee list</label>
         </div>
         <div>
-          <Input className='table-input-search mr-2' size='small' placeholder='Search Users, Type atleast 3 characters' onChange={handleSearchChange} />
-          <Button icon={<PlusCircleOutlined />} type='primary'>Add User</Button>
+          <Input className='table-input-search' size='small' placeholder='Search Users, Type atleast 3 characters' onChange={handleSearchChange} />
+          <Button className='ml-2' icon={<PlusCircleOutlined />} type='primary'>Add User</Button>
         </div>
       </div>
       <Card>

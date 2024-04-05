@@ -10,9 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <StyleProvider hashPriority="high"> */}
-      <App />
-      {/* </StyleProvider> */}
+      <StyleProvider hashPriority="high" global={true}>
+        <App />
+      </StyleProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

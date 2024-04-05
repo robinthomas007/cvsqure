@@ -32,6 +32,7 @@ const Skills = () => {
         console.error('Error fetching profile:', error);
       });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.current, pagination.pageSize, q])
 
   useEffect(() => {
@@ -87,8 +88,8 @@ const Skills = () => {
           <label className='text-xl font-semibold'>Skills list</label>
         </div>
         <div>
-          <Input className='table-input-search mr-2' size='small' placeholder='Search Skills, Type atleast 3 characters' onChange={handleSearchChange} />
-          <Button icon={<PlusCircleOutlined />} type='primary' onClick={() => { setEditSkills(null); setOpen(true) }}>Add Skills</Button>
+          <Input className='table-input-search' size='small' placeholder='Search Skills, Type atleast 3 characters' onChange={handleSearchChange} />
+          <Button className='ml-2' icon={<PlusCircleOutlined />} type='primary' onClick={() => { setEditSkills(null); setOpen(true) }}>Add Skills</Button>
         </div>
       </div>
 
