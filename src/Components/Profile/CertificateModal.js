@@ -16,11 +16,6 @@ export default function CertificationModal({ open, handleCancel, certifications,
   }, [certificate])
 
   const onFinish = (values) => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      handleCancel();
-      setConfirmLoading(false);
-    }, 1000);
     const data = { ...values, expires_on: dayjs(values.expires_on).format(dateFormat) }
     if (certificate?.id) {
       const updatedCertifications = certifications.map(work => {

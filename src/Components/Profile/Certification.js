@@ -5,13 +5,18 @@ import CertificationModal from './CertificateModal';
 
 export default function Certification({ certifications, handleSetProfile, setCurrent, current, open, setOpen }) {
 
-  // const [open, setOpen] = useState(false);
   const [editCertificate, setEditCertificate] = useState(null);
 
   const handleCancel = () => {
     setOpen(false)
     setEditCertificate(null)
   }
+
+  const deleteRecord = (rec) => {
+    const data = certifications.filter(item => item.id !== rec.id)
+    handleSetProfile(data, 'certifications');
+  }
+
 
   return (
     <Row gutter={[16]}>
@@ -53,6 +58,7 @@ export default function Certification({ certifications, handleSetProfile, setCur
                   size={20}
                   color={"#FF4D4F"}
                   variant={"stroke"}
+                  onClick={() => deleteRecord(cert)}
                 />
               </div>
             </div>

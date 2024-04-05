@@ -5,7 +5,6 @@ import JobModal from './JobModal';
 
 export default function JobHistory({ work_histories, handleSetProfile, setCurrent, current, renderToast, open, setOpen }) {
 
-  // const [open, setOpen] = useState(false);
   const [editJob, setEditJob] = useState(null);
 
   const handleCancel = () => {
@@ -13,6 +12,11 @@ export default function JobHistory({ work_histories, handleSetProfile, setCurren
       setOpen(false)
       setEditJob(null)
     }
+  }
+
+  const deleteRecord = (rec) => {
+    const data = work_histories.filter(item => item.id !== rec.id)
+    handleSetProfile(data, 'work_histories');
   }
 
   return (
@@ -57,6 +61,7 @@ export default function JobHistory({ work_histories, handleSetProfile, setCurren
                     size={20}
                     color={"#FF4D4F"}
                     variant={"stroke"}
+                    onClick={() => deleteRecord(job)}
                   />
                 </div>
               </div>

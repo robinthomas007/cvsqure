@@ -16,7 +16,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
   useEffect(() => {
     if (personal_details) {
       if (personal_details.photo_url) {
-        // setFileList([{ url: personal_details.photo_url }])
+        setFileList([{ url: personal_details.photo_url }])
       }
       const full_address = personal_details.address ? personal_details.address.split(',') : []
       form.setFieldsValue({
@@ -214,7 +214,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
         <Col xs={24} sm={24} md={24} lg={6}>
           <div className='sm:ml-10'>
             <Upload
-              listType="picture-card"
+              listType="picture-circle"
               maxCount={1}
               beforeUpload={() => false}
               fileList={fileList}
@@ -241,7 +241,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
                 src={previewImage}
               />
             </Modal>
-            <p className='text-center w-full mt-2 text-sm px-0'>
+            <p className='text-center w-full mt-2 text-sm px-4'>
               Upload the photo in a common format like <span className='text-teal-700 font-semibold'>JPEG</span> or <span className='text-teal-700 font-semibold'>PNG</span>, with a file size ideally under <span className='text-teal-700 font-semibold'>1 MB</span>.
             </p>
           </div>

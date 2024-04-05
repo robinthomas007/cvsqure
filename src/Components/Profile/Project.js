@@ -5,12 +5,16 @@ import ProjectModal from './ProjectModal';
 
 export default function Project({ handleSetProfile, project_experiences, setCurrent, current, renderToast, open, setOpen }) {
 
-  // const [open, setOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
 
   const handleCancel = () => {
     setOpen(false)
     setEditProject(null)
+  }
+
+  const deleteRecord = (rec) => {
+    const data = project_experiences.filter(item => item.id !== rec.id)
+    handleSetProfile(data, 'project_experiences');
   }
 
   return (
@@ -53,6 +57,7 @@ export default function Project({ handleSetProfile, project_experiences, setCurr
                   size={20}
                   color={"#FF4D4F"}
                   variant={"stroke"}
+                  onClick={() => deleteRecord(project)}
                 />
               </div>
             </div>

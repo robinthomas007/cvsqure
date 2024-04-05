@@ -151,7 +151,7 @@ const Profile = () => {
       />,
     },
     {
-      title: 'Job History',
+      title: 'Work History',
       content: <JobHistory
         handleSetProfile={handleSetProfile}
         work_histories={userProfile?.work_histories}

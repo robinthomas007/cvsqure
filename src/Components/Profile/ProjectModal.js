@@ -16,11 +16,6 @@ export default function Project({ open, handleCancel, project_experiences, handl
   }, [project])
 
   const onFinish = (values) => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      handleCancel();
-      setConfirmLoading(false);
-    }, 1000);
     const data = { ...values, start_date: dayjs(values.start_date).format(dateFormat), end_date: dayjs(values.end_date).format(dateFormat) }
     if (project?.id) {
       const updatedProjects = project_experiences.map(pr => {

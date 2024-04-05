@@ -8,7 +8,6 @@ export default function Education({ open, handleCancel, educational_details, han
   const [form] = Form.useForm()
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-
   useEffect(() => {
     console.log(education, 'education')
     if (education)
@@ -16,11 +15,6 @@ export default function Education({ open, handleCancel, educational_details, han
   }, [education])
 
   const onFinish = (values) => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      handleCancel();
-      setConfirmLoading(false);
-    }, 1000);
     const data = { ...values, graduation_year: dayjs(values.graduation_year).format(dateFormat) }
     if (education?.id) {
       const updatedWorkHistories = educational_details.map(work => {

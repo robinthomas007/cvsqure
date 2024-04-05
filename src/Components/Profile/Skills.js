@@ -67,7 +67,10 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
                     <Select
                       placeholder='Select skills'
                       size='large'
-                      options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))} />
+                      showSearch
+                      allowClear
+                      options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={10} push={1} >
@@ -94,7 +97,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
             </Col>))}
         </Row >
 
-        <span onClick={() => handleAddSkills()} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Skill</span>
+        <span onClick={() => handleAddSkills()} className='text-orange-400 w-32 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Skill</span>
       </Card >
       <Row>
         <Col span={24}>

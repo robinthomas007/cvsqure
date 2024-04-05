@@ -4,12 +4,16 @@ import { Briefcase01Icon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, 
 import EducationModal from './EducationModal';
 
 export default function Education({ educational_details, handleSetProfile, setCurrent, current, renderToast, open, setOpen }) {
-  // const [open, setOpen] = useState(false);
   const [editEducation, setEditEducation] = useState(null);
 
   const handleCancel = () => {
     setOpen(false)
     setEditEducation(null)
+  }
+
+  const deleteRecord = (rec) => {
+    const data = educational_details.filter(item => item.id !== rec.id)
+    handleSetProfile(data, 'educational_details');
   }
 
   return (
@@ -53,6 +57,7 @@ export default function Education({ educational_details, handleSetProfile, setCu
                   size={20}
                   color={"#FF4D4F"}
                   variant={"stroke"}
+                  onClick={() => deleteRecord(edu)}
                 />
               </div>
             </div>
