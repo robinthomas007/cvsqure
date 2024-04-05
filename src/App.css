@@ -1,65 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Spectral+SC:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
 
-body, .ant-layout  {
-    font-family: 'Roboto' !important;
-  }
-
-
-  .ant-col {
-    font-family: 'Roboto' !important;
+body, .ant-layout {
+  font-family: "League Spartan", sans-serif !important;
 }
 
-.ant-input-outlined , .ant-select-selector, .ant-picker{
-  border: none !important;
-  border-bottom: 1px solid #ddd!important;
-  box-shadow: none !important;
+.ant-col {
+  font-family: "League Spartan", sans-serif !important;
 }
 
-.ant-input-outlined:focus , .ant-select-selector:focus, .ant-select-focused{
-  box-shadow:none !important;
-  border-bottom: 1px solid rgb(30, 30, 168) !important;
-  /* outline: none; */
-  box-shadow: none !important;
+.ant-input-outlined, .ant-select-selector, .ant-picker {
+  padding: 12px !important;
+  color: #646464 !important;
+  font-family: "League Spartan", sans-serif !important;
+  font-size: 16px !important;
 }
 
-/* Default width and height */
+.ant-form-item-label label {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #1F1F1F !important;
+}
+
 .profile-upload .ant-upload-select,
 .profile-upload .ant-upload-list-item {
-  width: 200px !important;
-  height: 200px !important;
+  width: 220px !important;
+  height: 220px !important;
 }
 
-/* Media query for small screens (e.g., mobile phones) */
-@media (max-width: 640px) {
-  .profile-upload .ant-upload-select,
-  .profile-upload .ant-upload-list-item {
-    width: 50px !important;
-    height: 50px !important;
-  }
+.user-layout .cv-menu-left .ant-menu-item-selected {
+  color: #fff !important;
+  background: #168D7F !important;
+  border-radius: 6px !important;
 }
 
-/* Media query for medium screens (e.g., tablets) */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .profile-upload .ant-upload-select,
-  .profile-upload .ant-upload-list-item {
-    width: 100px !important;
-    height: 100px !important;
-  }
+.admin-layout .cv-menu-left .ant-menu-item-selected {
+  background: #2B648D !important;
+  color: #fff !important;
+  border-radius: 6px !important;
 }
 
-/* Media query for large screens (e.g., desktops) */
-@media (min-width: 1025px) {
-  .profile-upload .ant-upload-select,
-  .profile-upload .ant-upload-list-item {
-    width: 200px !important;
-    height: 200px !important;
-  }
+.ant-steps-item-active .ant-steps-item-icon svg,
+.ant-steps-item-finish .ant-steps-item-icon svg {
+  background: #F99417 !important;
+  border: #F99417 !important;
+  color: #fff;
+  border-radius: 100px;
 }
 
+.ant-steps-item-finish .ant-steps-icon {
+  color: #fff !important;
+}
 
-.menu-style {
+.ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-tail::after {
+  background-color: #ccc !important;
+}
 
-  height: 100vh;
-  width: 200px;
-  position: fixed;
-  }
+.ant-steps.ant-steps-vertical .ant-steps-item {
+  position: relative;
+}
+
+.ant-steps.ant-steps-vertical .ant-steps-item:not(:last-child) .ant-steps-item-container::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 2px);
+  left: 12px;
+  width: 1px;
+  height: calc(100% - 21px);
+  background-color: #ccc;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  border-style: dotted;
+}
+
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+  display: inline-block !important;
+  margin-inline-end: 4px !important;
+  color: #ff4d4f !important;
+  font-size: 14px !important;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*" !important;
+  visibility: visible !important;
+}
+
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  visibility: hidden !important;
+}
+
+.ant-steps-item-tail {
+  display: none !important;
+}
+
+.ant-rate-star-full svg {
+  fill: #FDCF2F !important;
+}
+
+.table-input-search {
+  padding: 5px !important;
+  width: 260px;
+  font-size: 14px !important;
+}
+
+.ant-form-item-explain-error {
+  display: none;
+}

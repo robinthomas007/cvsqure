@@ -1,171 +1,105 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { Button, Form, Input, Row, Col, Checkbox, Card, DatePicker } from 'antd';
-import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs'
+import React, { useState } from 'react';
+import { Button, Row, Col, Card } from 'antd';
+import { FileValidationIcon, DragDropVerticalIcon, PencilEdit01Icon, Delete03Icon, PlusSignCircleIcon } from 'hugeicons-react';
+import ProjectModal from './ProjectModal';
 
-const { TextArea } = Input
-const dateFormat = 'DD-MM-YYYY'
+export default function Project({ handleSetProfile, project_experiences, setCurrent, current, renderToast }) {
 
-export default function Project({ handleSetProfile, project_experiences }) {
-  const [projects, setProjects] = useState([{}]);
+  const [open, setOpen] = useState(false);
+  const [editProject, setEditProject] = useState(null);
 
-  const [form] = Form.useForm()
-
-  useEffect(() => {
-    if (project_experiences && project_experiences.length > 0) {
-      const projectDtl = project_experiences.map((pro, i) => {
-        return { ...pro, start_date: dayjs(pro.start_date, dateFormat), end_date: dayjs(pro.end_date, dateFormat) }
-      })
-      setProjects(projectDtl)
-      form.setFieldsValue({
-        project_experiences: projectDtl
-      })
-    }
-  }, [project_experiences])
-
-  const handleAddProjects = () => {
-    setProjects([...projects, {}]);
-  };
-
-  const handleRemoveProjects = (index) => {
-    const updatedProejcts = [...projects];
-    updatedProejcts.splice(index, 1);
-    setProjects(updatedProejcts);
-  };
-
-  const onFinish = useCallback((values) => {
-    const formValues = values.project_experiences.map((val, i) => {
-      return { ...val, start_date: dayjs(val.start_date).format(dateFormat), end_date: dayjs(val.end_date).format(dateFormat) }
-    })
-    handleSetProfile(formValues, 'project_experiences')
-  }, [project_experiences]);
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  const handleCancel = () => {
+    setOpen(false)
+    setEditProject(null)
+  }
 
   return (
-    <Form
-      name="job_history_form"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-      labelAlign="top"
-      form={form}
-    >
-      <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
-        <div className='font-semibold text-2xl py-6 text-blue-500'>
-          Project Experience
+    <Row gutter={[16]}>
+      <Col xs={24} sm={24} md={24} lg={24}>
+        <div>
+          <h2 className='text-gray-700 text-3xl my-2'>Project Experience</h2>
+          <p className='text-gray-500 text-lg'>Unleash your expertise: Share your project experiences and shine bright</p>
         </div>
-        <Button type="primary" onClick={handleAddProjects}>
-          Add Project Experience
-        </Button>
-      </div>}>
-        {projects.map((job, index) => (
-          <Row key={index} gutter={16} className={`p-10 ${index !== projects.length - 1 ? 'border-b-2' : ''}`}>
-            <Col span={18}>
-              <Row gutter={16} className='items-end'>
-                <Col span={12}>
-                  <Form.Item
-                    name={['project_experiences', index, 'name']}
-                    label="Project Name"
-                    rules={[{ required: true, message: 'Please input Project Name!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Input placeholder="Project Name" />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    name={['project_experiences', index, 'tech_stack']}
-                    label="Tech Stack"
-                    // rules={[{ required: true, message: 'Please input Tech Stack!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Input placeholder="Tech Stack" />
-                  </Form.Item>
-                </Col>
+      </Col>
 
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <Form.Item
-                    name={['project_experiences', index, 'roles_responsibilities']}
-                    label="Roles & Responsibilities"
-                    rules={[{ required: true, message: 'Please input company!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <TextArea placeholder="Roles & Responsibilities" rows={4} />
-                  </Form.Item>
-                </Col>
-                <Col span={24}>
-                  <Form.Item
-                    name={['project_experiences', index, 'description']}
-                    label="Description"
-                    rules={[{ required: true, message: 'Please input company!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <TextArea placeholder="Description" rows={4} />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={16} className='items-end'>
-                <Col span={6}>
-                  <Form.Item
-                    name={['project_experiences', index, 'start_date']}
-                    label="Start Date"
-                    rules={[{ required: true, message: 'Please input month!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <DatePicker format={dateFormat} />
-
-                  </Form.Item>
-                </Col>
-                <Col span={6}>
-                  <Form.Item
-                    label="End Date"
-                    name={['project_experiences', index, 'end_date']}
-                    rules={[{ required: true, message: 'Please input year!' }]}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <DatePicker format={dateFormat} />
-
-                  </Form.Item>
-                </Col>
-                <Col span={7}>
-                  <Form.Item
-                    name={['project_experiences', index, 'current']}
-                    labelCol={{ span: 24 }}
-                    style={{ marginBottom: 5 }}
-                  >
-                    <Checkbox>I currently work in this Project</Checkbox>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Col>
-            <Col span={6}>
-              <div style={{ display: 'flex' }} className='my-10 justify-end'>
-                {index > 0 && <DeleteOutlined onClick={() => handleRemoveProjects(index)} className='text-blue-600 text-xl' />}
+      {open && <ProjectModal project_experiences={project_experiences} open={open} handleCancel={handleCancel} project={editProject} handleSetProfile={handleSetProfile} />}
+      {project_experiences.length > 0 && <Col xs={24} sm={24} md={24} lg={24}>
+        {project_experiences.map((project, index) => (
+          <Card className='w-full my-4 shadow-sm hover:shadow' >
+            <div className='flex justify-between'>
+              <div className='flex'>
+                <DragDropVerticalIcon
+                  size={24}
+                  color={"#000000"}
+                  variant={"stroke"}
+                />
+                <div className='ml-2'>
+                  <div className='text-gray-900 text-lg mb-2'>{project.name}<span className='text-gray-500 mx-2'> |</span><span className='text-gray-500 text-base'> {project.roles_responsibilities}</span></div>
+                  <div className='text-base text-gray-500 mb-2'>{project.description}</div>
+                  <div className='text-base text-gray-500'>{project.start_date} - {project.end_date}</div>
+                </div>
               </div>
-            </Col>
-          </Row>
+              <div className='flex gap-3'>
+                <PencilEdit01Icon
+                  size={20}
+                  color={"#4F4C4C"}
+                  variant={"stroke"}
+                  onClick={() => {
+                    setEditProject(project);
+                    setOpen(true)
+                  }}
+                />
+                <Delete03Icon
+                  size={20}
+                  color={"#FF4D4F"}
+                  variant={"stroke"}
+                />
+              </div>
+            </div>
+          </Card>
         ))}
-        <div className='flex justify-end'>
-          <Form.Item>
-            <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
-              icon={<DoubleRightOutlined className='ml-1' />}
-              size='large' type="primary" htmlType="submit" >
-              Next
-            </Button>
-          </Form.Item>
+        <span onClick={() => setOpen(true)} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Project</span>
+      </Col>}
+
+      {project_experiences.length === 0 && <Col xs={24} sm={24} md={24} lg={24}>
+        <Card className='w-full' >
+          <div className='flex flex-col items-center justify-center gap-4'>
+            <FileValidationIcon
+              size={54}
+              color={"#F99417"}
+              variant={"stroke"}
+              className='bg-orange-100 rounded-full p-2'
+            />
+            <p className='text-xl text-gray-500 w-96 text-center'>Elevate your project with user-driven expertise. Transforming experiences, one valuable contribution at a time</p>
+            <Button onClick={() => setOpen(true)} type='primary'> Add Project experience</Button>
+          </div>
+        </Card>
+      </Col>}
+      <Col span={24}>
+        <div className='flex items-center justify-between w-full mt-6'>
+          <Button
+            style={{ padding: '0px 30px' }}
+            className="md:w-auto md:justify-end"
+            size='large'
+            onClick={() => setCurrent(current - 1)}
+          >
+            Back
+          </Button>
+
+          <Button
+            style={{ padding: '0px 30px' }}
+            className="md:w-auto md:justify-end"
+            size='large'
+            type="primary"
+            onClick={() => {
+              renderToast()
+              setCurrent(current + 1)
+            }}
+          >
+            Next
+          </Button>
         </div>
-      </Card>
-    </Form>
+      </Col>
+    </Row>
   );
 }

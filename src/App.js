@@ -9,10 +9,9 @@ function App() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#2563eb', borderRadius: 2,
+          fontFamily: "League Spartan",
+          colorPrimary: '#168D7F',
           components: {
-            Input: {
-            }
           },
         }
       }}>

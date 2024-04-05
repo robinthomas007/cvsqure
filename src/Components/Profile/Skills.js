@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Button, Form, Input, Row, Col, Rate, Card, Select } from 'antd';
-import { DoubleRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Form, Row, Col, Rate, Card, Select } from 'antd';
+import { Delete03Icon, StarIcon, PlusSignCircleIcon } from 'hugeicons-react';
 
-export default function Skills({ skillsSet, skills_data, handleSetProfile }) {
+export default function Skills({ skillsSet, skills_data, handleSetProfile, setCurrent, current }) {
   const [skills, setSkills] = useState([{}]);
 
   const [form] = Form.useForm()
@@ -27,7 +27,6 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile }) {
   };
 
   const onFinish = useCallback((values) => {
-
     handleSetProfile(values.skills, 'skills')
   }, [skills_data]);
 
@@ -44,19 +43,21 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile }) {
       labelAlign="top"
       form={form}
     >
-      <Card className='shadow-2xl' title={<div className='flex justify-between items-center'>
-        <div className='font-semibold text-2xl py-6 text-blue-500'>
-          Skills
-        </div>
-        <Button type="primary" onClick={handleAddSkills}>
-          Add Skills
-        </Button>
-      </div>}>
-        {skills.map((job, index) => (
-          <Row key={index} gutter={16} className={`p-2 ${index !== skills.length - 1 ? '' : ''}`}>
-            <Col span={18}>
-              <Row gutter={16} className='items-end'>
-                <Col span={6} push={2}>
+      <Row gutter={[16]}>
+        <Col xs={24} sm={24} md={24} lg={24}>
+          <div>
+            <h2 className='text-gray-700 text-3xl my-2'>Skills</h2>
+            <p className='text-gray-500 text-lg mb-6'>Time to showcase your skills and expertis</p>
+          </div>
+        </Col>
+      </Row>
+      <Card>
+
+        <Row gutter={[16, 16]} className='my-2'>
+          {skills.map((job, index) => (
+            <Col span={12}>
+              <Row>
+                <Col span={11} >
                   <Form.Item
                     name={['skills', index, 'name']}
                     rules={[{ required: true, message: 'Please select skills!' }]}
@@ -65,39 +66,60 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile }) {
                   >
                     <Select
                       placeholder='Select skills'
+                      size='large'
                       options={skillsSet.map((skill) => ({ label: skill.name, value: skill.name }))} />
                   </Form.Item>
                 </Col>
-                <Col span={6} push={2}>
+                <Col span={10} push={1} >
                   <Form.Item
                     name={['skills', index, 'rating']}
                     rules={[{ required: true, message: 'Please select rating!' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
-                    <Rate />
+                    <Rate character={<StarIcon fill='#eee' />} />
                   </Form.Item>
                 </Col>
 
-                <Col span={6} push={2}>
-                  <div style={{ display: 'flex' }} className='justify-start items-center'>
-                    {index > 0 && <DeleteOutlined onClick={() => handleRemoveSkills(index)} className='text-blue-600 text-xl' />}
+                <Col span={2}>
+                  <div style={{ display: 'flex' }} className='justify-start items-center cursor-pointer'>
+                    {index > 0 && <Delete03Icon
+                      size={20}
+                      color={"#FF4D4F"}
+                      variant={"stroke"}
+                      onClick={() => handleRemoveSkills(index)} />}
                   </div>
                 </Col>
               </Row>
-            </Col>
-          </Row>
-        ))}
-        <div className='flex justify-end mt-4'>
-          <Form.Item>
-            <Button style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}
-              icon={<DoubleRightOutlined className='ml-1' />}
-              size='large' type="primary" htmlType="submit" >
+            </Col>))}
+        </Row >
+
+        <span onClick={() => handleAddSkills()} className='text-orange-400 flex items-center gap-2 text-lg cursor-pointer mt-2'> <PlusSignCircleIcon size={20} /> Add Skill</span>
+      </Card >
+      <Row>
+        <Col span={24}>
+          <div className='flex items-center justify-between w-full mt-6'>
+            <Button
+              style={{ padding: '0px 30px' }}
+              className="md:w-auto md:justify-end"
+              size='large'
+              onClick={() => setCurrent(current - 1)}
+            >
+              Back
+            </Button>
+
+            <Button
+              style={{ padding: '0px 30px' }}
+              className="md:w-auto md:justify-end"
+              size='large'
+              type="primary"
+              htmlType="submit"
+            >
               Next
             </Button>
-          </Form.Item>
-        </div>
-      </Card>
-    </Form>
+          </div>
+        </Col>
+      </Row >
+    </Form >
   );
 }

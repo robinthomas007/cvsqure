@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet, Navigate, useLocation } from 'react-router-dom'
+import { ConfigProvider } from 'antd';
 import { Layout } from 'antd';
 import { useAuth } from './../Context/authContext'
 import HeaderProfile from './../Components/Header/Header'
@@ -15,20 +16,26 @@ export const AdminRoutes = () => {
   }
 
   return (
-    <Layout className='min-h-fit'>
-      <Layout style={{ background: '#fff', minHeight: 915 }}>
-        <Sider width={300} theme='dark'>
-          <Sidenav />
-        </Sider>
-        <Content>
-          <Header className='bg-white' style={{ padding: 0, background: '#fff' }}>
-            <HeaderProfile />
-          </Header>
-          <div className='' style={{ padding: '50px 100px 0px' }}>
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: "League Spartan",
+          colorPrimary: '#2B648D',
+        }
+      }}>
+      <Layout className='min-h-fit admin-layout'>
+        <Header className='bg-cyan-700 m-2' style={{ padding: 0, background: '#2B648D', borderRadius: 8 }}>
+          <HeaderProfile />
+        </Header>
+        <Layout style={{ background: '#f5f5f5', minHeight: 915 }}>
+          <Sider className='shadow-lg m-2 rounded-md' width={240} theme='light'>
+            <Sidenav />
+          </Sider>
+          <Content className='mr-2'>
             <Outlet />
-          </div>
-        </Content>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   )
 }
