@@ -10,8 +10,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
   useEffect(() => {
     if (job)
       form.setFieldsValue({ ...job, start_date: dayjs(job.start_date, dateFormat), end_date: dayjs(job.end_date, dateFormat) })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [job])
+  }, [job, form])
 
   const onFinish = (values) => {
     const data = { ...values, start_date: dayjs(values.start_date).format(dateFormat), end_date: dayjs(values.end_date).format(dateFormat) }
@@ -64,7 +63,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='job_title'
                   label="Designation"
-                  rules={[{ required: true, message: 'Please input job title!' }]}
+                  rules={[{ required: true, message: '' }]}
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}
                 >
@@ -75,7 +74,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='company'
                   label="Company"
-                  rules={[{ required: true, message: 'Please input company!' }]}
+                  rules={[{ required: true, message: '' }]}
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}
                 >
@@ -88,7 +87,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='location'
                   label="Location"
-                  rules={[{ required: true, message: 'Please input location!' }]}
+                  rules={[{ required: true, message: '' }]}
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}
                 >
@@ -101,6 +100,17 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}
                   valuePropName="checked"
+                  dependencies={['end_date']}
+                  rules={[
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value && !getFieldValue('end_date')) {
+                          return Promise.reject();
+                        }
+                        return Promise.resolve();
+                      },
+                    }),
+                  ]}
                 >
                   <Checkbox className='text-base'>I currently work here</Checkbox>
                 </Form.Item>
@@ -111,7 +121,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='start_date'
                   label="Start Date"
-                  rules={[{ required: true, message: 'Please input location!' }]}
+                  rules={[{ required: true, message: '' }]}
                   labelCol={{ span: 24 }}
                 >
                   <DatePicker picker="month" format={dateFormat} className='w-full' />
@@ -122,8 +132,18 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='end_date'
                   label="End Date"
-                  rules={[{ required: true, message: 'Please input location!' }]}
                   labelCol={{ span: 24 }}
+                  dependencies={['current']}
+                  rules={[
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value && !getFieldValue('current')) {
+                          return Promise.reject();
+                        }
+                        return Promise.resolve();
+                      },
+                    }),
+                  ]}
                 >
                   <DatePicker picker="month" format={dateFormat} className='w-full' />
                 </Form.Item>
@@ -134,7 +154,7 @@ const JobModal = ({ open, handleCancel, work_histories, handleSetProfile, job })
                 <Form.Item
                   name='description'
                   label="Description"
-                  rules={[{ required: true, message: 'Write your roles and responsibility in your job' }]}
+                  rules={[{ required: true, message: '' }]}
                   labelCol={{ span: 24 }}
                   style={{ marginBottom: 5 }}
                 >

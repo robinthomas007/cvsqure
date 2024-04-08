@@ -97,7 +97,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Employee Number"
               name="employee_number"
-              rules={[{ required: true, message: 'Please input your employee number!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -108,7 +108,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Designation"
               name="profession"
-              rules={[{ required: true, message: 'Please input your profession!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -120,7 +120,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
               <Form.Item
                 label="City"
                 name={["address", "city"]}
-                rules={[{ required: true, message: 'Please input your city!' }]}
+                rules={[{ required: true, message: '' }]}
                 labelCol={{ span: 24 }}
                 style={{ marginBottom: 5 }}
               >
@@ -130,7 +130,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Country"
               name={["address", "country"]}
-              rules={[{ required: true, message: 'Please input your country!' }]}
+              rules={[{ required: true, message: '!' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -139,7 +139,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Pin Code"
               name={["address", "pincode"]}
-              rules={[{ required: true, message: 'Please input your pincode!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
@@ -151,7 +151,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Mobile Number"
               name="phone_number"
-              rules={[{ required: true, message: 'Please input your phone!' }]}
+              rules={[{ required: true, message: '' }]}
               labelAlign="top"
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
@@ -182,7 +182,7 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Personal portfolio/ Medium/Opensource Contributions"
               name="portfolio"
-              rules={[{ required: true, message: '' }]}
+              rules={[{ required: false, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -193,10 +193,10 @@ export default function PersonalInfo({ personal_details, handleSetProfile }) {
             <Form.Item
               label="Professional Summary (highlight your experience, competency, and aspirations)"
               name="summary"
-              rules={[{ required: true, message: '' }]}
+              rules={[{ required: true, message: '' }, { min: 150 }]}
               labelCol={{ span: 24 }}
             >
-              <TextArea rows={4} placeholder='Summary' />
+              <TextArea rows={4} placeholder='Summary (min length 150, max length 300)' minLength={150} maxLength={300} />
             </Form.Item>
           </div>
           <div className='flex justify-end'>

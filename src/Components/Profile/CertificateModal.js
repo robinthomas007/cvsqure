@@ -63,6 +63,7 @@ export default function CertificationModal({ open, handleCancel, certifications,
               name='url'
               label="Certification URL"
               rules={[
+                { required: true, message: '' },
                 { type: 'url', warningOnly: true, message: 'Invalid url' },
                 { type: 'string', min: 6, message: 'min 6 character is required' }]}
               labelCol={{ span: 24 }}
@@ -75,7 +76,7 @@ export default function CertificationModal({ open, handleCancel, certifications,
             <Form.Item
               name='name'
               label="Certification Name"
-              // rules={[{ required: true, message: 'Please select name!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 10 }}
             >
@@ -86,7 +87,7 @@ export default function CertificationModal({ open, handleCancel, certifications,
             <Form.Item
               name='issued_by'
               label="Issued by"
-              // rules={[{ required: true, message: 'Please select issue by!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 10 }}
             >
@@ -97,7 +98,7 @@ export default function CertificationModal({ open, handleCancel, certifications,
             <Form.Item
               name='expires_on'
               label="Expires on"
-              // rules={[{ required: true, message: 'Please select expires on!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 10 }}
             >

@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Row, Col, Checkbox, Modal, DatePicker } from 'antd';
 import dayjs from 'dayjs'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const { TextArea } = Input
 const dateFormat = 'MMM-YYYY';
 
-export default function Project({ open, handleCancel, project_experiences, handleSetProfile, project }) {
 
+export default function Project({ open, handleCancel, project_experiences, handleSetProfile, project }) {
   const [form] = Form.useForm()
 
   useEffect(() => {
     if (project)
-      form.setFieldsValue({ ...project, start_date: dayjs(project.start_date, dateFormat), end_date: dayjs(project.end_date, dateFormat) })
+      form.setFieldsValue({
+        ...project, start_date: dayjs(project.start_date, dateFormat),
+        end_date: dayjs(project.end_date, dateFormat),
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [project])
 
@@ -64,7 +69,7 @@ export default function Project({ open, handleCancel, project_experiences, handl
             <Form.Item
               name='name'
               label="Project Name"
-              rules={[{ required: true, message: 'Please input Project Name!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -77,7 +82,7 @@ export default function Project({ open, handleCancel, project_experiences, handl
             <Form.Item
               name='description'
               label="Description"
-              rules={[{ required: true, message: 'Please input company!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -90,31 +95,38 @@ export default function Project({ open, handleCancel, project_experiences, handl
             <Form.Item
               name='roles_responsibilities'
               label="Roles & Responsibilities"
-              rules={[{ required: true, message: 'Please input company!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
-              <TextArea placeholder="Roles & Responsibilities" rows={4} />
+              <ReactQuill formats={['bold', 'italic', 'underline', 'list', 'bullet']}
+                placeholder='Roles & Responsibilities' theme="snow" modules={{
+                  toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'bullet' }],
+                  ],
+                }} />
             </Form.Item>
           </Col>
         </Row>
         <Row>
-          {/* <Col span={24}>
-            <Form.Item
-              name='tech_stack'
-              label="Tech Stack"
-              // rules={[{ required: true, message: 'Please input Tech Stack!' }]}
-              labelCol={{ span: 24 }}
-              style={{ marginBottom: 5 }}
-            >
-              <Input placeholder="Tech Stack" />
-            </Form.Item>
-          </Col> */}
           <Col span={12}>
             <Form.Item
               name='current'
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
+              dependencies={['end_date']}
+              valuePropName="checked"
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value && !getFieldValue('end_date')) {
+                      return Promise.reject();
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
             >
               <Checkbox>Currently I’m working in this project</Checkbox>
             </Form.Item>
@@ -125,7 +137,7 @@ export default function Project({ open, handleCancel, project_experiences, handl
             <Form.Item
               name='start_date'
               label="Start Date"
-              rules={[{ required: true, message: 'Please input month!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -136,9 +148,19 @@ export default function Project({ open, handleCancel, project_experiences, handl
             <Form.Item
               label="End Date"
               name='end_date'
-              rules={[{ required: true, message: 'Please input year!' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
+              dependencies={['current']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value && !getFieldValue('current')) {
+                      return Promise.reject();
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
             >
               <DatePicker picker='month' className='w-full' format={dateFormat} />
             </Form.Item>

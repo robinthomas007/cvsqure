@@ -104,8 +104,19 @@ body, .ant-layout {
 .ant-form-item-explain-error {
   display: none;
 }
-
+.ant-form-item-has-error .ant-checkbox-inner {
+  border-color: #ff4d4f !important; 
+}
 .ant-table-cell {
   font-size: 16px !important;
   color: #5B5B5D !important;
+}
+
+.ant-form-item-has-error .ant-rate{
+  border: 1px solid red;
+    padding: 4px;
+    border-radius: 8px;
+}
+.ql-editor {
+  min-height: 120px;
 }

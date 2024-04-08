@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearCookie } from './../Lib/auth'
 
 // Set axios default configuration
 axios.defaults.withCredentials = true;
@@ -24,6 +25,9 @@ axios.interceptors.response.use(
   (error) => {
     // Handle response error
     // token expired
+    if (error.response.status === 401) {
+      clearCookie()
+    }
     return Promise.reject(error);
   }
 );

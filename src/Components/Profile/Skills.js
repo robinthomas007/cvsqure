@@ -62,7 +62,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
                 <Col span={11} >
                   <Form.Item
                     name={['skills', index, 'name']}
-                    rules={[{ required: true, message: 'Please select skills!' }]}
+                    rules={[{ required: true, message: '' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >
@@ -78,7 +78,7 @@ export default function Skills({ skillsSet, skills_data, handleSetProfile, setCu
                 <Col span={10} push={1} >
                   <Form.Item
                     name={['skills', index, 'rating']}
-                    rules={[{ required: true, message: 'Please select rating!' }]}
+                    rules={[{ required: true, message: '' }]}
                     labelCol={{ span: 24 }}
                     style={{ marginBottom: 5 }}
                   >

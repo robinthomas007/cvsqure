@@ -63,7 +63,7 @@ export default function Education({ open, handleCancel, educational_details, han
             <Form.Item
               name='university'
               label="University / College Name"
-              rules={[{ required: true, message: 'Please input university!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -71,22 +71,22 @@ export default function Education({ open, handleCancel, educational_details, han
             </Form.Item>
           </Col>
 
-          <Col span={18}>
+          <Col span={17}>
             <Form.Item
               name='degree'
               label="Degree"
-              rules={[{ required: true, message: 'Please input degree!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
               <Input placeholder="Degree" />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col span={7}>
             <Form.Item
               name='graduation_year'
               label="Graduation Date"
-              rules={[{ required: true, message: 'Please select graduation year!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
@@ -98,7 +98,7 @@ export default function Education({ open, handleCancel, educational_details, han
             <Form.Item
               name='location'
               label="University / College Location"
-              rules={[{ required: true, message: 'Please input Location!' }]}
+              rules={[{ required: true, message: '' }]}
               labelCol={{ span: 24 }}
               style={{ marginBottom: 5 }}
             >
